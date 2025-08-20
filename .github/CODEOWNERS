@@ -1,0 +1,23 @@
+# This file defines who owns what in the codebase
+# For more details, see: https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+
+# Default owners for everything in the repo
+*       @ratna-jaiswal
+
+# Frontend code
+/app/**  @frontend-maintainer-username
+/components/**  @frontend-maintainer-username
+/styles/**  @frontend-maintainer-username
+
+# Backend code (to be implemented)
+/backend/**  @backend-maintainer-username
+/api/**  @backend-maintainer-username
+
+# Documentation
+*.md    @docs-maintainer-username
+/docs/**  @docs-maintainer-username
+
+# Configuration files
+*.json  @config-maintainer-username
+*.js    @config-maintainer-username
+*.ts    @config-maintainer-username

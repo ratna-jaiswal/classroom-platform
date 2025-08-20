@@ -1,0 +1,277 @@
+"use client"
+
+import { useState } from "react"
+import Navigation from "@/components/navigation"
+import { Button } from "@/components/ui/button"
+import { Calendar } from "@/components/ui/calendar"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
+import { Input } from "@/components/ui/input"
+import { Textarea } from "@/components/ui/textarea"
+import { Plus, CalendarIcon, Clock, Users, BookOpen, Edit, Trash2 } from "lucide-react"
+
+export default function ScheduleManagePage() {
+  const [date, setDate] = useState<Date | undefined>(new Date())
+  const [isDialogOpen, setIsDialogOpen] = useState(false)
+
+  const scheduleData = [
+    {
+      id: 1,
+      title: "Advanced Mathematics",
+      date: "2023-07-24",
+      time: "10:00 AM - 11:30 AM",
+      students: 28,
+      topic: "Differential Equations",
+    },
+    {
+      id: 2,
+      title: "Physics Lab",
+      date: "2023-07-24",
+      time: "1:00 PM - 3:00 PM",
+      students: 22,
+      topic: "Wave Properties Experiment",
+    },
+    {
+      id: 3,
+      title: "Computer Science",
+      date: "2023-07-25",
+      time: "9:00 AM - 10:30 AM",
+      students: 35,
+      topic: "Data Structures",
+    },
+    {
+      id: 4,
+      title: "Chemistry",
+      date: "2023-07-26",
+      time: "11:00 AM - 12:30 PM",
+      students: 26,
+      topic: "Organic Compounds",
+    },
+  ]
+
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+      <Navigation userType="teacher" />
+
+      {/* Main content - Added pl-4 for small screens to prevent overlap with hamburger menu */}
+      <div className="lg:pl-80 pt-8 pb-16 pl-16">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8">
+            <div>
+              <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white">Schedule Management</h1>
+              <p className="mt-1 text-gray-600 dark:text-gray-300">Create and manage your class schedules</p>
+            </div>
+            <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+              <DialogTrigger asChild>
+                <Button className="mt-4 sm:mt-0 bg-gradient-to-r from-emerald-500 to-emerald-600 dark:from-emerald-400 dark:to-emerald-500 hover:from-emerald-600 hover:to-emerald-700 dark:hover:from-emerald-500 dark:hover:to-emerald-600 text-white shadow-lg btn-animate">
+                  <Plus className="mr-2 h-4 w-4" />
+                  Add Class
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="sm:max-w-[525px] glass dark:bg-gray-800/90">
+                <DialogHeader>
+                  <DialogTitle className="text-xl text-gray-900 dark:text-white">Schedule New Class</DialogTitle>
+                  <DialogDescription className="text-gray-600 dark:text-gray-300">
+                    Fill in the details to schedule a new class.
+                  </DialogDescription>
+                </DialogHeader>
+                <div className="grid gap-4 py-4">
+                  <div className="grid grid-cols-4 items-center gap-4">
+                    <label htmlFor="class-title" className="text-right text-gray-700 dark:text-gray-300 text-sm">
+                      Class Title
+                    </label>
+                    <Input id="class-title" placeholder="Enter class title" className="col-span-3 focus-ring" />
+                  </div>
+                  <div className="grid grid-cols-4 items-center gap-4">
+                    <label htmlFor="class-date" className="text-right text-gray-700 dark:text-gray-300 text-sm">
+                      Date
+                    </label>
+                    <Input id="class-date" type="date" className="col-span-3 focus-ring" />
+                  </div>
+                  <div className="grid grid-cols-4 items-center gap-4">
+                    <label htmlFor="start-time" className="text-right text-gray-700 dark:text-gray-300 text-sm">
+                      Start Time
+                    </label>
+                    <Input id="start-time" type="time" className="col-span-3 focus-ring" />
+                  </div>
+                  <div className="grid grid-cols-4 items-center gap-4">
+                    <label htmlFor="end-time" className="text-right text-gray-700 dark:text-gray-300 text-sm">
+                      End Time
+                    </label>
+                    <Input id="end-time" type="time" className="col-span-3 focus-ring" />
+                  </div>
+                  <div className="grid grid-cols-4 items-center gap-4">
+                    <label htmlFor="topic" className="text-right text-gray-700 dark:text-gray-300 text-sm">
+                      Topic
+                    </label>
+                    <Input id="topic" placeholder="Enter class topic" className="col-span-3 focus-ring" />
+                  </div>
+                  <div className="grid grid-cols-4 items-center gap-4">
+                    <label htmlFor="description" className="text-right text-gray-700 dark:text-gray-300 text-sm">
+                      Description
+                    </label>
+                    <Textarea
+                      id="description"
+                      placeholder="Enter class description"
+                      className="col-span-3 focus-ring"
+                    />
+                  </div>
+                </div>
+                <DialogFooter>
+                  <Button
+                    variant="outline"
+                    onClick={() => setIsDialogOpen(false)}
+                    className="border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    onClick={() => setIsDialogOpen(false)}
+                    className="bg-gradient-to-r from-emerald-500 to-emerald-600 dark:from-emerald-400 dark:to-emerald-500 hover:from-emerald-600 hover:to-emerald-700 dark:hover:from-emerald-500 dark:hover:to-emerald-600 text-white"
+                  >
+                    Schedule Class
+                  </Button>
+                </DialogFooter>
+              </DialogContent>
+            </Dialog>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div className="lg:col-span-2">
+              <Tabs defaultValue="list" className="w-full">
+                <TabsList className="grid w-full grid-cols-2 mb-6 bg-muted/50 dark:bg-gray-800/50">
+                  <TabsTrigger
+                    value="list"
+                    className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-700 data-[state=active]:text-emerald-600 dark:data-[state=active]:text-emerald-400"
+                  >
+                    List View
+                  </TabsTrigger>
+                  <TabsTrigger
+                    value="calendar"
+                    className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-700 data-[state=active]:text-emerald-600 dark:data-[state=active]:text-emerald-400"
+                  >
+                    Calendar View
+                  </TabsTrigger>
+                </TabsList>
+                <TabsContent value="list" className="space-y-4">
+                  {scheduleData.map((item) => (
+                    <Card key={item.id} className="glass dark:bg-gray-800/80 card-hover">
+                      <CardContent className="p-0">
+                        <div className="flex flex-col sm:flex-row sm:items-center justify-between p-6">
+                          <div className="flex-1">
+                            <div className="flex items-center">
+                              <div className="w-2 h-2 rounded-full bg-emerald-500 dark:bg-emerald-400 mr-2"></div>
+                              <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{item.title}</h3>
+                            </div>
+                            <p className="mt-1 text-gray-600 dark:text-gray-300">{item.topic}</p>
+                            <div className="flex flex-wrap gap-4 mt-3">
+                              <div className="flex items-center text-sm text-gray-500 dark:text-gray-400">
+                                <CalendarIcon className="mr-1 h-4 w-4" />
+                                {item.date}
+                              </div>
+                              <div className="flex items-center text-sm text-gray-500 dark:text-gray-400">
+                                <Clock className="mr-1 h-4 w-4" />
+                                {item.time}
+                              </div>
+                              <div className="flex items-center text-sm text-gray-500 dark:text-gray-400">
+                                <Users className="mr-1 h-4 w-4" />
+                                {item.students} Students
+                              </div>
+                            </div>
+                          </div>
+                          <div className="flex items-center mt-4 sm:mt-0">
+                            <Button
+                              variant="outline"
+                              size="icon"
+                              className="mr-2 border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 bg-transparent"
+                            >
+                              <Edit className="h-4 w-4" />
+                            </Button>
+                            <Button
+                              variant="outline"
+                              size="icon"
+                              className="border-gray-200 dark:border-gray-700 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 bg-transparent"
+                            >
+                              <Trash2 className="h-4 w-4" />
+                            </Button>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </TabsContent>
+                <TabsContent value="calendar">
+                  <Card className="glass dark:bg-gray-800/80">
+                    <CardContent className="p-6">
+                      <Calendar
+                        mode="single"
+                        selected={date}
+                        onSelect={setDate}
+                        className="mx-auto bg-white dark:bg-gray-800 rounded-md p-3"
+                      />
+                    </CardContent>
+                  </Card>
+                </TabsContent>
+              </Tabs>
+            </div>
+
+            <div>
+              <Card className="glass dark:bg-gray-800/80">
+                <CardHeader>
+                  <CardTitle className="text-gray-900 dark:text-white">Quick Actions</CardTitle>
+                  <CardDescription className="text-gray-600 dark:text-gray-300">
+                    Manage your schedule efficiently
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div>
+                    <label className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 block">
+                      Filter by Subject
+                    </label>
+                    <Select>
+                      <SelectTrigger className="w-full focus-ring">
+                        <SelectValue placeholder="Select subject" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="math">Mathematics</SelectItem>
+                        <SelectItem value="physics">Physics</SelectItem>
+                        <SelectItem value="chemistry">Chemistry</SelectItem>
+                        <SelectItem value="biology">Biology</SelectItem>
+                        <SelectItem value="cs">Computer Science</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div>
+                    <label className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 block">
+                      Filter by Date Range
+                    </label>
+                    <div className="grid grid-cols-2 gap-2">
+                      <Input type="date" className="focus-ring" />
+                      <Input type="date" className="focus-ring" />
+                    </div>
+                  </div>
+                  <div className="pt-4">
+                    <Button className="w-full bg-gradient-to-r from-emerald-500 to-emerald-600 dark:from-emerald-400 dark:to-emerald-500 hover:from-emerald-600 hover:to-emerald-700 dark:hover:from-emerald-500 dark:hover:to-emerald-600 text-white shadow-md btn-animate">
+                      <BookOpen className="mr-2 h-4 w-4" />
+                      Generate Schedule Report
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}

@@ -1,0 +1,485 @@
+"use client"
+
+import { useState } from "react"
+import Navigation from "@/components/navigation"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Input } from "@/components/ui/input"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
+import { Textarea } from "@/components/ui/textarea"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Plus, Video, Calendar, Clock, Users, Edit, Trash2, Play, LinkIcon } from "lucide-react"
+
+export default function LiveClassesManagePage() {
+  const [isDialogOpen, setIsDialogOpen] = useState(false)
+
+  const liveClassesData = [
+    {
+      id: 1,
+      title: "Advanced Mathematics",
+      date: "Today",
+      time: "10:00 AM - 11:30 AM",
+      students: 28,
+      topic: "Differential Equations",
+      status: "upcoming",
+      platform: "Zoom",
+      meetingId: "873 0192 4560",
+    },
+    {
+      id: 2,
+      title: "Physics Lab",
+      date: "Today",
+      time: "1:00 PM - 3:00 PM",
+      students: 22,
+      topic: "Wave Properties Experiment",
+      status: "upcoming",
+      platform: "Google Meet",
+      meetingId: "abc-defg-hij",
+    },
+    {
+      id: 3,
+      title: "Computer Science",
+      date: "Tomorrow",
+      time: "9:00 AM - 10:30 AM",
+      students: 35,
+      topic: "Data Structures",
+      status: "scheduled",
+      platform: "Microsoft Teams",
+      meetingId: "team_meeting_cs101",
+    },
+    {
+      id: 4,
+      title: "Chemistry",
+      date: "Jul 26, 2023",
+      time: "11:00 AM - 12:30 PM",
+      students: 26,
+      topic: "Organic Compounds",
+      status: "scheduled",
+      platform: "Zoom",
+      meetingId: "873 0192 8890",
+    },
+  ]
+
+  const getStatusBadgeClass = (status: string) => {
+    switch (status) {
+      case "live":
+        return "bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400"
+      case "upcoming":
+        return "bg-yellow-100 dark:bg-yellow-900/30 text-yellow-600 dark:text-yellow-400"
+      case "scheduled":
+        return "bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400"
+      case "completed":
+        return "bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400"
+      default:
+        return "bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400"
+    }
+  }
+
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+      <Navigation userType="teacher" />
+
+      {/* Main content - Added pl-16 for small screens to prevent overlap with hamburger menu */}
+      <div className="lg:pl-80 pt-8 pb-16 pl-16">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8">
+            <div>
+              <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white">Live Classes</h1>
+              <p className="mt-1 text-gray-600 dark:text-gray-300">Schedule and manage your virtual classes</p>
+            </div>
+            <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+              <DialogTrigger asChild>
+                <Button className="mt-4 sm:mt-0 bg-gradient-to-r from-emerald-500 to-emerald-600 dark:from-emerald-400 dark:to-emerald-500 hover:from-emerald-600 hover:to-emerald-700 dark:hover:from-emerald-500 dark:hover:to-emerald-600 text-white shadow-lg btn-animate">
+                  <Plus className="mr-2 h-4 w-4" />
+                  Schedule Class
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="sm:max-w-[525px] glass dark:bg-gray-800/90">
+                <DialogHeader>
+                  <DialogTitle className="text-xl text-gray-900 dark:text-white">Schedule Live Class</DialogTitle>
+                  <DialogDescription className="text-gray-600 dark:text-gray-300">
+                    Fill in the details to schedule a new virtual class.
+                  </DialogDescription>
+                </DialogHeader>
+                <div className="grid gap-4 py-4">
+                  <div className="grid grid-cols-4 items-center gap-4">
+                    <label htmlFor="class-title" className="text-right text-gray-700 dark:text-gray-300 text-sm">
+                      Class Title
+                    </label>
+                    <Input id="class-title" placeholder="Enter class title" className="col-span-3 focus-ring" />
+                  </div>
+                  <div className="grid grid-cols-4 items-center gap-4">
+                    <label htmlFor="class-date" className="text-right text-gray-700 dark:text-gray-300 text-sm">
+                      Date
+                    </label>
+                    <Input id="class-date" type="date" className="col-span-3 focus-ring" />
+                  </div>
+                  <div className="grid grid-cols-4 items-center gap-4">
+                    <label htmlFor="start-time" className="text-right text-gray-700 dark:text-gray-300 text-sm">
+                      Start Time
+                    </label>
+                    <Input id="start-time" type="time" className="col-span-3 focus-ring" />
+                  </div>
+                  <div className="grid grid-cols-4 items-center gap-4">
+                    <label htmlFor="end-time" className="text-right text-gray-700 dark:text-gray-300 text-sm">
+                      End Time
+                    </label>
+                    <Input id="end-time" type="time" className="col-span-3 focus-ring" />
+                  </div>
+                  <div className="grid grid-cols-4 items-center gap-4">
+                    <label htmlFor="platform" className="text-right text-gray-700 dark:text-gray-300 text-sm">
+                      Platform
+                    </label>
+                    <Select>
+                      <SelectTrigger id="platform" className="col-span-3 focus-ring">
+                        <SelectValue placeholder="Select platform" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="zoom">Zoom</SelectItem>
+                        <SelectItem value="gmeet">Google Meet</SelectItem>
+                        <SelectItem value="teams">Microsoft Teams</SelectItem>
+                        <SelectItem value="other">Other</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="grid grid-cols-4 items-center gap-4">
+                    <label htmlFor="meeting-link" className="text-right text-gray-700 dark:text-gray-300 text-sm">
+                      Meeting Link
+                    </label>
+                    <Input id="meeting-link" placeholder="Enter meeting link" className="col-span-3 focus-ring" />
+                  </div>
+                  <div className="grid grid-cols-4 items-center gap-4">
+                    <label htmlFor="meeting-id" className="text-right text-gray-700 dark:text-gray-300 text-sm">
+                      Meeting ID
+                    </label>
+                    <Input id="meeting-id" placeholder="Enter meeting ID" className="col-span-3 focus-ring" />
+                  </div>
+                  <div className="grid grid-cols-4 items-center gap-4">
+                    <label htmlFor="topic" className="text-right text-gray-700 dark:text-gray-300 text-sm">
+                      Topic
+                    </label>
+                    <Input id="topic" placeholder="Enter class topic" className="col-span-3 focus-ring" />
+                  </div>
+                  <div className="grid grid-cols-4 items-center gap-4">
+                    <label htmlFor="description" className="text-right text-gray-700 dark:text-gray-300 text-sm">
+                      Description
+                    </label>
+                    <Textarea
+                      id="description"
+                      placeholder="Enter class description"
+                      className="col-span-3 focus-ring"
+                    />
+                  </div>
+                </div>
+                <DialogFooter>
+                  <Button
+                    variant="outline"
+                    onClick={() => setIsDialogOpen(false)}
+                    className="border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    onClick={() => setIsDialogOpen(false)}
+                    className="bg-gradient-to-r from-emerald-500 to-emerald-600 dark:from-emerald-400 dark:to-emerald-500 hover:from-emerald-600 hover:to-emerald-700 dark:hover:from-emerald-500 dark:hover:to-emerald-600 text-white"
+                  >
+                    Schedule Class
+                  </Button>
+                </DialogFooter>
+              </DialogContent>
+            </Dialog>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div className="lg:col-span-2">
+              <Tabs defaultValue="upcoming" className="w-full">
+                <TabsList className="grid w-full grid-cols-3 mb-6 bg-muted/50 dark:bg-gray-800/50">
+                  <TabsTrigger
+                    value="upcoming"
+                    className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-700 data-[state=active]:text-emerald-600 dark:data-[state=active]:text-emerald-400"
+                  >
+                    Upcoming
+                  </TabsTrigger>
+                  <TabsTrigger
+                    value="scheduled"
+                    className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-700 data-[state=active]:text-emerald-600 dark:data-[state=active]:text-emerald-400"
+                  >
+                    Scheduled
+                  </TabsTrigger>
+                  <TabsTrigger
+                    value="completed"
+                    className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-700 data-[state=active]:text-emerald-600 dark:data-[state=active]:text-emerald-400"
+                  >
+                    Completed
+                  </TabsTrigger>
+                </TabsList>
+                <TabsContent value="upcoming" className="space-y-4">
+                  {liveClassesData
+                    .filter((item) => item.status === "upcoming" || item.status === "live")
+                    .map((item) => (
+                      <Card key={item.id} className="glass dark:bg-gray-800/80 card-hover">
+                        <CardContent className="p-0">
+                          <div className="flex flex-col sm:flex-row sm:items-center justify-between p-6">
+                            <div className="flex-1">
+                              <div className="flex items-center">
+                                <div className="w-2 h-2 rounded-full bg-emerald-500 dark:bg-emerald-400 mr-2"></div>
+                                <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{item.title}</h3>
+                                <span
+                                  className={`ml-3 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getStatusBadgeClass(item.status)}`}
+                                >
+                                  {item.status === "live" && (
+                                    <span className="w-1.5 h-1.5 mr-1.5 bg-red-500 dark:bg-red-400 rounded-full animate-pulse"></span>
+                                  )}
+                                  {item.status.charAt(0).toUpperCase() + item.status.slice(1)}
+                                </span>
+                              </div>
+                              <p className="mt-1 text-gray-600 dark:text-gray-300">{item.topic}</p>
+                              <div className="flex flex-wrap gap-4 mt-3">
+                                <div className="flex items-center text-sm text-gray-500 dark:text-gray-400">
+                                  <Calendar className="mr-1 h-4 w-4" />
+                                  {item.date}
+                                </div>
+                                <div className="flex items-center text-sm text-gray-500 dark:text-gray-400">
+                                  <Clock className="mr-1 h-4 w-4" />
+                                  {item.time}
+                                </div>
+                                <div className="flex items-center text-sm text-gray-500 dark:text-gray-400">
+                                  <Users className="mr-1 h-4 w-4" />
+                                  {item.students} Students
+                                </div>
+                              </div>
+                              <div className="flex items-center mt-3 text-sm text-gray-500 dark:text-gray-400">
+                                <span className="font-medium">{item.platform}:</span>
+                                <span className="ml-1">{item.meetingId}</span>
+                              </div>
+                            </div>
+                            <div className="flex items-center mt-4 sm:mt-0">
+                              <Button
+                                variant="outline"
+                                size="icon"
+                                className="mr-2 border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 bg-transparent"
+                              >
+                                <Edit className="h-4 w-4" />
+                              </Button>
+                              <Button
+                                variant="outline"
+                                size="icon"
+                                className="mr-2 border-gray-200 dark:border-gray-700 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 bg-transparent"
+                              >
+                                <Trash2 className="h-4 w-4" />
+                              </Button>
+                              {item.status === "upcoming" && (
+                                <Button className="bg-gradient-to-r from-emerald-500 to-emerald-600 dark:from-emerald-400 dark:to-emerald-500 hover:from-emerald-600 hover:to-emerald-700 dark:hover:from-emerald-500 dark:hover:to-emerald-600 text-white">
+                                  <Play className="mr-2 h-4 w-4" />
+                                  Start Class
+                                </Button>
+                              )}
+                              {item.status === "live" && (
+                                <Button className="bg-gradient-to-r from-red-500 to-red-600 dark:from-red-400 dark:to-red-500 hover:from-red-600 hover:to-red-700 dark:hover:from-red-500 dark:hover:to-red-600 text-white">
+                                  <Video className="mr-2 h-4 w-4" />
+                                  Join Live
+                                </Button>
+                              )}
+                            </div>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    ))}
+                </TabsContent>
+                <TabsContent value="scheduled" className="space-y-4">
+                  {liveClassesData
+                    .filter((item) => item.status === "scheduled")
+                    .map((item) => (
+                      <Card key={item.id} className="glass dark:bg-gray-800/80 card-hover">
+                        <CardContent className="p-0">
+                          <div className="flex flex-col sm:flex-row sm:items-center justify-between p-6">
+                            <div className="flex-1">
+                              <div className="flex items-center">
+                                <div className="w-2 h-2 rounded-full bg-emerald-500 dark:bg-emerald-400 mr-2"></div>
+                                <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{item.title}</h3>
+                                <span
+                                  className={`ml-3 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getStatusBadgeClass(item.status)}`}
+                                >
+                                  Scheduled
+                                </span>
+                              </div>
+                              <p className="mt-1 text-gray-600 dark:text-gray-300">{item.topic}</p>
+                              <div className="flex flex-wrap gap-4 mt-3">
+                                <div className="flex items-center text-sm text-gray-500 dark:text-gray-400">
+                                  <Calendar className="mr-1 h-4 w-4" />
+                                  {item.date}
+                                </div>
+                                <div className="flex items-center text-sm text-gray-500 dark:text-gray-400">
+                                  <Clock className="mr-1 h-4 w-4" />
+                                  {item.time}
+                                </div>
+                                <div className="flex items-center text-sm text-gray-500 dark:text-gray-400">
+                                  <Users className="mr-1 h-4 w-4" />
+                                  {item.students} Students
+                                </div>
+                              </div>
+                              <div className="flex items-center mt-3 text-sm text-gray-500 dark:text-gray-400">
+                                <span className="font-medium">{item.platform}:</span>
+                                <span className="ml-1">{item.meetingId}</span>
+                              </div>
+                            </div>
+                            <div className="flex items-center mt-4 sm:mt-0">
+                              <Button
+                                variant="outline"
+                                size="icon"
+                                className="mr-2 border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 bg-transparent"
+                              >
+                                <Edit className="h-4 w-4" />
+                              </Button>
+                              <Button
+                                variant="outline"
+                                size="icon"
+                                className="border-gray-200 dark:border-gray-700 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 bg-transparent"
+                              >
+                                <Trash2 className="h-4 w-4" />
+                              </Button>
+                            </div>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    ))}
+                </TabsContent>
+                <TabsContent value="completed" className="space-y-4">
+                  <Card className="glass dark:bg-gray-800/80">
+                    <CardContent className="p-6">
+                      <div className="flex flex-col items-center justify-center py-10 text-center">
+                        <Video className="h-12 w-12 text-gray-400 dark:text-gray-500 mb-4" />
+                        <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
+                          No completed classes yet
+                        </h3>
+                        <p className="text-gray-600 dark:text-gray-300 max-w-sm">
+                          Your completed classes will appear here. You can view recordings and analytics after classes
+                          are finished.
+                        </p>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </TabsContent>
+              </Tabs>
+            </div>
+
+            <div>
+              <Card className="glass dark:bg-gray-800/80">
+                <CardHeader>
+                  <CardTitle className="text-gray-900 dark:text-white">Quick Actions</CardTitle>
+                  <CardDescription className="text-gray-600 dark:text-gray-300">
+                    Manage your virtual classes
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div>
+                    <label className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 block">
+                      Filter by Subject
+                    </label>
+                    <Select>
+                      <SelectTrigger className="w-full focus-ring">
+                        <SelectValue placeholder="Select subject" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="math">Mathematics</SelectItem>
+                        <SelectItem value="physics">Physics</SelectItem>
+                        <SelectItem value="chemistry">Chemistry</SelectItem>
+                        <SelectItem value="biology">Biology</SelectItem>
+                        <SelectItem value="cs">Computer Science</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div>
+                    <label className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 block">
+                      Filter by Platform
+                    </label>
+                    <Select>
+                      <SelectTrigger className="w-full focus-ring">
+                        <SelectValue placeholder="Select platform" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="zoom">Zoom</SelectItem>
+                        <SelectItem value="gmeet">Google Meet</SelectItem>
+                        <SelectItem value="teams">Microsoft Teams</SelectItem>
+                        <SelectItem value="other">Other</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="pt-4">
+                    <Button className="w-full bg-gradient-to-r from-emerald-500 to-emerald-600 dark:from-emerald-400 dark:to-emerald-500 hover:from-emerald-600 hover:to-emerald-700 dark:hover:from-emerald-500 dark:hover:to-emerald-600 text-white shadow-md btn-animate">
+                      <LinkIcon className="mr-2 h-4 w-4" />
+                      Copy Meeting Link
+                    </Button>
+                  </div>
+                  <div className="pt-2">
+                    <h4 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">Upcoming Students</h4>
+                    <div className="space-y-3">
+                      <div className="flex items-center">
+                        <Avatar className="h-8 w-8 mr-3">
+                          <AvatarImage src="/placeholder.svg?height=32&width=32" />
+                          <AvatarFallback className="bg-blue-100 text-blue-600 dark:bg-blue-900 dark:text-blue-300">
+                            JD
+                          </AvatarFallback>
+                        </Avatar>
+                        <div>
+                          <p className="text-sm font-medium text-gray-900 dark:text-white">John Doe</p>
+                          <p className="text-xs text-gray-500 dark:text-gray-400">Mathematics</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center">
+                        <Avatar className="h-8 w-8 mr-3">
+                          <AvatarImage src="/placeholder.svg?height=32&width=32" />
+                          <AvatarFallback className="bg-green-100 text-green-600 dark:bg-green-900 dark:text-green-300">
+                            AS
+                          </AvatarFallback>
+                        </Avatar>
+                        <div>
+                          <p className="text-sm font-medium text-gray-900 dark:text-white">Alice Smith</p>
+                          <p className="text-xs text-gray-500 dark:text-gray-400">Physics</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center">
+                        <Avatar className="h-8 w-8 mr-3">
+                          <AvatarImage src="/placeholder.svg?height=32&width=32" />
+                          <AvatarFallback className="bg-purple-100 text-purple-600 dark:bg-purple-900 dark:text-purple-300">
+                            RJ
+                          </AvatarFallback>
+                        </Avatar>
+                        <div>
+                          <p className="text-sm font-medium text-gray-900 dark:text-white">Robert Johnson</p>
+                          <p className="text-xs text-gray-500 dark:text-gray-400">Chemistry</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center">
+                        <Avatar className="h-8 w-8 mr-3">
+                          <AvatarImage src="/placeholder.svg?height=32&width=32" />
+                          <AvatarFallback className="bg-yellow-100 text-yellow-600 dark:bg-yellow-900 dark:text-yellow-300">
+                            EW
+                          </AvatarFallback>
+                        </Avatar>
+                        <div>
+                          <p className="text-sm font-medium text-gray-900 dark:text-white">Emily Wilson</p>
+                          <p className="text-xs text-gray-500 dark:text-gray-400">Biology</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}

@@ -1,0 +1,509 @@
+"use client"
+
+import { useEffect, useState } from "react"
+import { useRouter } from "next/navigation"
+import Navigation from "@/components/navigation"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Textarea } from "@/components/ui/textarea"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
+import { Calendar, BookOpen, Users, Plus, Search, Download, Edit, Trash2, Eye } from "lucide-react"
+
+export default function ManageAssignmentsPage() {
+  const router = useRouter()
+  const [userType, setUserType] = useState<string | null>(null)
+  const [isCreatingAssignment, setIsCreatingAssignment] = useState(false)
+  const [searchTerm, setSearchTerm] = useState("")
+
+  const assignments = [
+    {
+      id: 1,
+      title: "Quadratic Equations Practice",
+      subject: "Mathematics",
+      class: "Class 12A",
+      dueDate: "2024-01-20",
+      totalMarks: 50,
+      submissions: 28,
+      totalStudents: 35,
+      status: "active",
+      description: "Solve the given quadratic equations using different methods.",
+    },
+    {
+      id: 2,
+      title: "Newton's Laws Assignment",
+      subject: "Physics",
+      class: "Class 11A",
+      dueDate: "2024-01-18",
+      totalMarks: 40,
+      submissions: 25,
+      totalStudents: 30,
+      status: "active",
+      description: "Explain Newton's three laws with real-world examples.",
+    },
+    {
+      id: 3,
+      title: "Chemical Bonding Quiz",
+      subject: "Chemistry",
+      class: "Class 12B",
+      dueDate: "2024-01-15",
+      totalMarks: 30,
+      submissions: 32,
+      totalStudents: 32,
+      status: "completed",
+      description: "Multiple choice questions on ionic and covalent bonding.",
+    },
+  ]
+
+  const classes = [
+    { id: "12A", name: "Class 12A - Mathematics" },
+    { id: "12B", name: "Class 12B - Mathematics" },
+    { id: "11A", name: "Class 11A - Physics" },
+  ]
+
+  useEffect(() => {
+    const type = localStorage.getItem("userType")
+    if (type !== "teacher") {
+      router.push("/")
+      return
+    }
+    setUserType(type)
+  }, [router])
+
+  if (!userType) {
+    return <div>Loading...</div>
+  }
+
+  const filteredAssignments = assignments.filter(
+    (assignment) =>
+      assignment.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      assignment.subject.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      assignment.class.toLowerCase().includes(searchTerm.toLowerCase()),
+  )
+
+  const activeAssignments = assignments.filter((a) => a.status === "active").length
+  const completedAssignments = assignments.filter((a) => a.status === "completed").length
+  const totalSubmissions = assignments.reduce((sum, a) => sum + a.submissions, 0)
+  const averageSubmissionRate = (totalSubmissions / assignments.reduce((sum, a) => sum + a.totalStudents, 0)) * 100
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+      <Navigation userType="teacher" />
+
+      <div className="lg:ml-80 p-4 lg:p-8">
+        <div className="mb-8 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
+          <div>
+            <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+              Manage Assignments
+            </h1>
+            <p className="text-gray-600 dark:text-gray-400 mt-2">
+              Create, track, and manage assignments for your classes.
+            </p>
+          </div>
+          <Dialog open={isCreatingAssignment} onOpenChange={setIsCreatingAssignment}>
+            <DialogTrigger asChild>
+              <Button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white shadow-lg">
+                <Plus className="h-4 w-4 mr-2" />
+                Create Assignment
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto bg-white dark:bg-gray-800">
+              <DialogHeader>
+                <DialogTitle className="text-gray-900 dark:text-white">Create New Assignment</DialogTitle>
+                <DialogDescription className="text-gray-600 dark:text-gray-400">
+                  Fill in the details to create a new assignment for your students.
+                </DialogDescription>
+              </DialogHeader>
+              <div className="space-y-6">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                  <div>
+                    <Label htmlFor="title" className="text-gray-700 dark:text-gray-300">
+                      Assignment Title
+                    </Label>
+                    <Input
+                      id="title"
+                      placeholder="Enter assignment title"
+                      className="bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600"
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="subject" className="text-gray-700 dark:text-gray-300">
+                      Subject
+                    </Label>
+                    <Input
+                      id="subject"
+                      placeholder="Enter subject"
+                      className="bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600"
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                  <div>
+                    <Label htmlFor="class" className="text-gray-700 dark:text-gray-300">
+                      Select Class
+                    </Label>
+                    <Select>
+                      <SelectTrigger className="bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600">
+                        <SelectValue placeholder="Choose a class" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {classes.map((cls) => (
+                          <SelectItem key={cls.id} value={cls.id}>
+                            {cls.name}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div>
+                    <Label htmlFor="dueDate" className="text-gray-700 dark:text-gray-300">
+                      Due Date
+                    </Label>
+                    <Input
+                      id="dueDate"
+                      type="date"
+                      className="bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600"
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                  <div>
+                    <Label htmlFor="totalMarks" className="text-gray-700 dark:text-gray-300">
+                      Total Marks
+                    </Label>
+                    <Input
+                      id="totalMarks"
+                      type="number"
+                      placeholder="Enter total marks"
+                      className="bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600"
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="type" className="text-gray-700 dark:text-gray-300">
+                      Assignment Type
+                    </Label>
+                    <Select>
+                      <SelectTrigger className="bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600">
+                        <SelectValue placeholder="Select type" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="homework">Homework</SelectItem>
+                        <SelectItem value="quiz">Quiz</SelectItem>
+                        <SelectItem value="project">Project</SelectItem>
+                        <SelectItem value="test">Test</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+
+                <div>
+                  <Label htmlFor="description" className="text-gray-700 dark:text-gray-300">
+                    Description
+                  </Label>
+                  <Textarea
+                    id="description"
+                    placeholder="Enter assignment description and instructions"
+                    rows={4}
+                    className="bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600"
+                  />
+                </div>
+
+                <div className="flex flex-wrap justify-end gap-2">
+                  <Button variant="outline" onClick={() => setIsCreatingAssignment(false)}>
+                    Cancel
+                  </Button>
+                  <Button
+                    onClick={() => setIsCreatingAssignment(false)}
+                    className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
+                  >
+                    Create Assignment
+                  </Button>
+                </div>
+              </div>
+            </DialogContent>
+          </Dialog>
+        </div>
+
+        {/* Quick Stats */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+          <Card className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-lg hover:shadow-xl transition-all duration-300">
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium text-gray-700 dark:text-gray-300">Active Assignments</CardTitle>
+              <BookOpen className="h-4 w-4 text-blue-600" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">{activeAssignments}</div>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-lg hover:shadow-xl transition-all duration-300">
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium text-gray-700 dark:text-gray-300">Completed</CardTitle>
+              <Calendar className="h-4 w-4 text-green-600" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold text-green-600 dark:text-green-400">{completedAssignments}</div>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-lg hover:shadow-xl transition-all duration-300">
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium text-gray-700 dark:text-gray-300">Total Submissions</CardTitle>
+              <Users className="h-4 w-4 text-purple-600" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold text-purple-600 dark:text-purple-400">{totalSubmissions}</div>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-lg hover:shadow-xl transition-all duration-300">
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium text-gray-700 dark:text-gray-300">Submission Rate</CardTitle>
+              <Users className="h-4 w-4 text-orange-600" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold text-orange-600 dark:text-orange-400">
+                {averageSubmissionRate.toFixed(1)}%
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
+        <Tabs defaultValue="all" className="space-y-6">
+          <TabsList className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm">
+            <TabsTrigger value="all">All Assignments</TabsTrigger>
+            <TabsTrigger value="active">Active</TabsTrigger>
+            <TabsTrigger value="completed">Completed</TabsTrigger>
+            <TabsTrigger value="submissions">Submissions</TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="all" className="space-y-4">
+            <Card className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-lg">
+              <CardHeader>
+                <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
+                  <div>
+                    <CardTitle className="text-gray-900 dark:text-white">All Assignments</CardTitle>
+                    <CardDescription className="text-gray-600 dark:text-gray-400">
+                      Manage all your assignments
+                    </CardDescription>
+                  </div>
+                  <div className="flex flex-wrap items-center gap-2">
+                    <div className="relative">
+                      <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+                      <Input
+                        placeholder="Search assignments..."
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        className="pl-10 w-full lg:w-64 bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600"
+                      />
+                    </div>
+                    <Button variant="outline" className="flex-shrink-0 bg-transparent">
+                      <Download className="h-4 w-4 mr-2" />
+                      Export
+                    </Button>
+                  </div>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  {filteredAssignments.map((assignment) => (
+                    <div
+                      key={assignment.id}
+                      className="p-4 border border-gray-200 dark:border-gray-700 rounded-lg bg-white/50 dark:bg-gray-700/30 hover:bg-white/70 dark:hover:bg-gray-700/50 transition-all duration-200"
+                    >
+                      <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
+                        <div className="flex-1">
+                          <div className="flex flex-wrap items-center gap-2 mb-2">
+                            <h4 className="font-semibold text-lg text-gray-900 dark:text-white">{assignment.title}</h4>
+                            <Badge variant={assignment.status === "active" ? "default" : "secondary"}>
+                              {assignment.status}
+                            </Badge>
+                          </div>
+                          <p className="text-gray-600 dark:text-gray-400 mb-2">{assignment.description}</p>
+                          <div className="flex flex-wrap items-center gap-4 text-sm text-gray-500 dark:text-gray-400">
+                            <span>{assignment.subject}</span>
+                            <span>{assignment.class}</span>
+                            <span>Due: {assignment.dueDate}</span>
+                            <span>Marks: {assignment.totalMarks}</span>
+                          </div>
+                        </div>
+                        <div className="flex flex-col lg:flex-row items-start lg:items-center gap-4">
+                          <div className="text-center">
+                            <p className="text-2xl font-bold text-blue-600 dark:text-blue-400">
+                              {assignment.submissions}/{assignment.totalStudents}
+                            </p>
+                            <p className="text-xs text-gray-500 dark:text-gray-400">Submissions</p>
+                          </div>
+                          <div className="flex flex-wrap gap-2">
+                            <Button size="sm" variant="outline">
+                              <Eye className="h-4 w-4 mr-1" />
+                              View
+                            </Button>
+                            <Button size="sm" variant="outline">
+                              <Edit className="h-4 w-4 mr-1" />
+                              Edit
+                            </Button>
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              className="text-red-600 hover:text-red-700 bg-transparent"
+                            >
+                              <Trash2 className="h-4 w-4 mr-1" />
+                              Delete
+                            </Button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="active" className="space-y-4">
+            <Card className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-lg">
+              <CardHeader>
+                <CardTitle className="text-gray-900 dark:text-white">Active Assignments</CardTitle>
+                <CardDescription className="text-gray-600 dark:text-gray-400">
+                  Currently active assignments
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  {filteredAssignments
+                    .filter((a) => a.status === "active")
+                    .map((assignment) => (
+                      <div
+                        key={assignment.id}
+                        className="p-4 border border-gray-200 dark:border-gray-700 rounded-lg bg-white/50 dark:bg-gray-700/30"
+                      >
+                        <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
+                          <div>
+                            <h4 className="font-semibold text-gray-900 dark:text-white">{assignment.title}</h4>
+                            <p className="text-sm text-gray-600 dark:text-gray-400">
+                              {assignment.class} • Due: {assignment.dueDate}
+                            </p>
+                          </div>
+                          <div className="text-center">
+                            <p className="text-lg font-bold text-blue-600 dark:text-blue-400">
+                              {assignment.submissions}/{assignment.totalStudents}
+                            </p>
+                            <p className="text-xs text-gray-500 dark:text-gray-400">Submitted</p>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="completed" className="space-y-4">
+            <Card className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-lg">
+              <CardHeader>
+                <CardTitle className="text-gray-900 dark:text-white">Completed Assignments</CardTitle>
+                <CardDescription className="text-gray-600 dark:text-gray-400">
+                  Assignments that have been completed
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  {filteredAssignments
+                    .filter((a) => a.status === "completed")
+                    .map((assignment) => (
+                      <div
+                        key={assignment.id}
+                        className="p-4 border border-gray-200 dark:border-gray-700 rounded-lg bg-white/50 dark:bg-gray-700/30"
+                      >
+                        <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
+                          <div>
+                            <h4 className="font-semibold text-gray-900 dark:text-white">{assignment.title}</h4>
+                            <p className="text-sm text-gray-600 dark:text-gray-400">
+                              {assignment.class} • Completed: {assignment.dueDate}
+                            </p>
+                          </div>
+                          <div className="text-center">
+                            <p className="text-lg font-bold text-green-600 dark:text-green-400">
+                              {assignment.submissions}/{assignment.totalStudents}
+                            </p>
+                            <p className="text-xs text-gray-500 dark:text-gray-400">Submitted</p>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="submissions" className="space-y-4">
+            <Card className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-lg">
+              <CardHeader>
+                <CardTitle className="text-gray-900 dark:text-white">Recent Submissions</CardTitle>
+                <CardDescription className="text-gray-600 dark:text-gray-400">
+                  Latest assignment submissions from students
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  {[
+                    {
+                      student: "John Doe",
+                      assignment: "Quadratic Equations Practice",
+                      submittedAt: "2024-01-16 10:30 AM",
+                      status: "submitted",
+                    },
+                    {
+                      student: "Jane Smith",
+                      assignment: "Newton's Laws Assignment",
+                      submittedAt: "2024-01-16 09:15 AM",
+                      status: "graded",
+                    },
+                    {
+                      student: "Mike Johnson",
+                      assignment: "Chemical Bonding Quiz",
+                      submittedAt: "2024-01-15 11:45 AM",
+                      status: "graded",
+                    },
+                  ].map((submission, index) => (
+                    <div
+                      key={index}
+                      className="p-4 border border-gray-200 dark:border-gray-700 rounded-lg bg-white/50 dark:bg-gray-700/30"
+                    >
+                      <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
+                        <div>
+                          <h4 className="font-semibold text-gray-900 dark:text-white">{submission.student}</h4>
+                          <p className="text-sm text-gray-600 dark:text-gray-400">{submission.assignment}</p>
+                          <p className="text-xs text-gray-500 dark:text-gray-400">
+                            Submitted: {submission.submittedAt}
+                          </p>
+                        </div>
+                        <Badge variant={submission.status === "graded" ? "default" : "secondary"}>
+                          {submission.status}
+                        </Badge>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+        </Tabs>
+      </div>
+    </div>
+  )
+}

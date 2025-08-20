@@ -1,0 +1,620 @@
+"use client"
+
+import { useState } from "react"
+import Navigation from "@/components/navigation"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Input } from "@/components/ui/input"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
+import { Textarea } from "@/components/ui/textarea"
+import { Progress } from "@/components/ui/progress"
+import { Plus, FileText, Video, ImageIcon, File, Edit, Trash2, Upload, Download, Eye } from "lucide-react"
+
+export default function ResourcesManagePage() {
+  const [isDialogOpen, setIsDialogOpen] = useState(false)
+  const [uploadProgress, setUploadProgress] = useState(0)
+  const [isUploading, setIsUploading] = useState(false)
+
+  const simulateUpload = () => {
+    setIsUploading(true)
+    setUploadProgress(0)
+
+    const interval = setInterval(() => {
+      setUploadProgress((prev) => {
+        if (prev >= 100) {
+          clearInterval(interval)
+          setIsUploading(false)
+          setIsDialogOpen(false)
+          return 100
+        }
+        return prev + 10
+      })
+    }, 300)
+  }
+
+  const resourcesData = [
+    {
+      id: 1,
+      title: "Advanced Mathematics Notes",
+      type: "document",
+      format: "PDF",
+      size: "2.4 MB",
+      uploadDate: "2023-07-15",
+      downloads: 128,
+      subject: "Mathematics",
+    },
+    {
+      id: 2,
+      title: "Physics Lab Experiment Video",
+      type: "video",
+      format: "MP4",
+      size: "45.8 MB",
+      uploadDate: "2023-07-10",
+      downloads: 87,
+      subject: "Physics",
+    },
+    {
+      id: 3,
+      title: "Chemistry Periodic Table",
+      type: "image",
+      format: "PNG",
+      size: "1.2 MB",
+      uploadDate: "2023-07-05",
+      downloads: 215,
+      subject: "Chemistry",
+    },
+    {
+      id: 4,
+      title: "Computer Science Algorithms",
+      type: "document",
+      format: "PDF",
+      size: "3.7 MB",
+      uploadDate: "2023-06-28",
+      downloads: 156,
+      subject: "Computer Science",
+    },
+  ]
+
+  const getIconForType = (type: string) => {
+    switch (type) {
+      case "document":
+        return <FileText className="h-6 w-6 text-blue-500 dark:text-blue-400" />
+      case "video":
+        return <Video className="h-6 w-6 text-red-500 dark:text-red-400" />
+      case "image":
+        return <ImageIcon className="h-6 w-6 text-green-500 dark:text-green-400" />
+      default:
+        return <File className="h-6 w-6 text-gray-500 dark:text-gray-400" />
+    }
+  }
+
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+      <Navigation userType="teacher" />
+
+      {/* Main content - Added pl-16 for small screens to prevent overlap with hamburger menu */}
+      <div className="lg:pl-80 pt-8 pb-16 pl-16">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8">
+            <div>
+              <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white">Resource Management</h1>
+              <p className="mt-1 text-gray-600 dark:text-gray-300">Upload and manage learning resources</p>
+            </div>
+            <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+              <DialogTrigger asChild>
+                <Button className="mt-4 sm:mt-0 bg-gradient-to-r from-emerald-500 to-emerald-600 dark:from-emerald-400 dark:to-emerald-500 hover:from-emerald-600 hover:to-emerald-700 dark:hover:from-emerald-500 dark:hover:to-emerald-600 text-white shadow-lg btn-animate">
+                  <Plus className="mr-2 h-4 w-4" />
+                  Upload Resource
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="sm:max-w-[525px] glass dark:bg-gray-800/90">
+                <DialogHeader>
+                  <DialogTitle className="text-xl text-gray-900 dark:text-white">Upload New Resource</DialogTitle>
+                  <DialogDescription className="text-gray-600 dark:text-gray-300">
+                    Add a new learning resource for your students.
+                  </DialogDescription>
+                </DialogHeader>
+                <div className="grid gap-4 py-4">
+                  <div className="grid grid-cols-4 items-center gap-4">
+                    <label htmlFor="resource-title" className="text-right text-gray-700 dark:text-gray-300 text-sm">
+                      Title
+                    </label>
+                    <Input id="resource-title" placeholder="Enter resource title" className="col-span-3 focus-ring" />
+                  </div>
+                  <div className="grid grid-cols-4 items-center gap-4">
+                    <label htmlFor="resource-subject" className="text-right text-gray-700 dark:text-gray-300 text-sm">
+                      Subject
+                    </label>
+                    <Select>
+                      <SelectTrigger id="resource-subject" className="col-span-3 focus-ring">
+                        <SelectValue placeholder="Select subject" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="math">Mathematics</SelectItem>
+                        <SelectItem value="physics">Physics</SelectItem>
+                        <SelectItem value="chemistry">Chemistry</SelectItem>
+                        <SelectItem value="biology">Biology</SelectItem>
+                        <SelectItem value="cs">Computer Science</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="grid grid-cols-4 items-center gap-4">
+                    <label htmlFor="resource-type" className="text-right text-gray-700 dark:text-gray-300 text-sm">
+                      Type
+                    </label>
+                    <Select>
+                      <SelectTrigger id="resource-type" className="col-span-3 focus-ring">
+                        <SelectValue placeholder="Select resource type" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="document">Document</SelectItem>
+                        <SelectItem value="video">Video</SelectItem>
+                        <SelectItem value="image">Image</SelectItem>
+                        <SelectItem value="audio">Audio</SelectItem>
+                        <SelectItem value="other">Other</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="grid grid-cols-4 items-center gap-4">
+                    <label
+                      htmlFor="resource-description"
+                      className="text-right text-gray-700 dark:text-gray-300 text-sm"
+                    >
+                      Description
+                    </label>
+                    <Textarea
+                      id="resource-description"
+                      placeholder="Enter resource description"
+                      className="col-span-3 focus-ring"
+                    />
+                  </div>
+                  <div className="grid grid-cols-4 items-center gap-4">
+                    <label htmlFor="resource-file" className="text-right text-gray-700 dark:text-gray-300 text-sm">
+                      File
+                    </label>
+                    <div className="col-span-3">
+                      <div className="flex items-center justify-center w-full">
+                        <label
+                          htmlFor="resource-file"
+                          className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:bg-gray-700 border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-600"
+                        >
+                          <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                            <Upload className="w-8 h-8 mb-3 text-gray-500 dark:text-gray-400" />
+                            <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
+                              <span className="font-semibold">Click to upload</span> or drag and drop
+                            </p>
+                            <p className="text-xs text-gray-500 dark:text-gray-400">
+                              PDF, DOCX, MP4, JPG, PNG (MAX. 100MB)
+                            </p>
+                          </div>
+                          <Input id="resource-file" type="file" className="hidden" />
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                  {isUploading && (
+                    <div className="grid grid-cols-4 items-center gap-4">
+                      <div className="text-right text-gray-700 dark:text-gray-300 text-sm">Progress</div>
+                      <div className="col-span-3">
+                        <Progress value={uploadProgress} className="h-2" />
+                        <p className="text-xs text-right mt-1 text-gray-500 dark:text-gray-400">
+                          {uploadProgress}% Complete
+                        </p>
+                      </div>
+                    </div>
+                  )}
+                </div>
+                <DialogFooter>
+                  <Button
+                    variant="outline"
+                    onClick={() => setIsDialogOpen(false)}
+                    className="border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    onClick={simulateUpload}
+                    disabled={isUploading}
+                    className="bg-gradient-to-r from-emerald-500 to-emerald-600 dark:from-emerald-400 dark:to-emerald-500 hover:from-emerald-600 hover:to-emerald-700 dark:hover:from-emerald-500 dark:hover:to-emerald-600 text-white"
+                  >
+                    {isUploading ? (
+                      <>
+                        <div className="spinner mr-2" />
+                        Uploading...
+                      </>
+                    ) : (
+                      "Upload Resource"
+                    )}
+                  </Button>
+                </DialogFooter>
+              </DialogContent>
+            </Dialog>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div className="lg:col-span-2">
+              <Tabs defaultValue="all" className="w-full">
+                <TabsList className="grid w-full grid-cols-4 mb-6 bg-muted/50 dark:bg-gray-800/50">
+                  <TabsTrigger
+                    value="all"
+                    className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-700 data-[state=active]:text-emerald-600 dark:data-[state=active]:text-emerald-400"
+                  >
+                    All
+                  </TabsTrigger>
+                  <TabsTrigger
+                    value="documents"
+                    className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-700 data-[state=active]:text-emerald-600 dark:data-[state=active]:text-emerald-400"
+                  >
+                    Documents
+                  </TabsTrigger>
+                  <TabsTrigger
+                    value="videos"
+                    className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-700 data-[state=active]:text-emerald-600 dark:data-[state=active]:text-emerald-400"
+                  >
+                    Videos
+                  </TabsTrigger>
+                  <TabsTrigger
+                    value="images"
+                    className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-700 data-[state=active]:text-emerald-600 dark:data-[state=active]:text-emerald-400"
+                  >
+                    Images
+                  </TabsTrigger>
+                </TabsList>
+                <TabsContent value="all" className="space-y-4">
+                  {resourcesData.map((resource) => (
+                    <Card key={resource.id} className="glass dark:bg-gray-800/80 card-hover">
+                      <CardContent className="p-0">
+                        <div className="flex flex-col sm:flex-row sm:items-center justify-between p-6">
+                          <div className="flex items-start sm:items-center">
+                            <div className="p-2 rounded-lg bg-gray-100 dark:bg-gray-700 mr-4">
+                              {getIconForType(resource.type)}
+                            </div>
+                            <div className="flex-1">
+                              <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{resource.title}</h3>
+                              <div className="flex flex-wrap gap-4 mt-2">
+                                <span className="inline-flex items-center text-xs font-medium px-2.5 py-0.5 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">
+                                  {resource.format}
+                                </span>
+                                <span className="text-sm text-gray-500 dark:text-gray-400">{resource.size}</span>
+                                <span className="text-sm text-gray-500 dark:text-gray-400">{resource.subject}</span>
+                              </div>
+                              <div className="flex items-center mt-2 text-sm text-gray-500 dark:text-gray-400">
+                                <span>Uploaded on {resource.uploadDate}</span>
+                                <span className="mx-2">•</span>
+                                <span>{resource.downloads} downloads</span>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="flex items-center mt-4 sm:mt-0 space-x-2">
+                            <Button
+                              variant="outline"
+                              size="icon"
+                              className="border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 bg-transparent"
+                            >
+                              <Eye className="h-4 w-4" />
+                            </Button>
+                            <Button
+                              variant="outline"
+                              size="icon"
+                              className="border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 bg-transparent"
+                            >
+                              <Download className="h-4 w-4" />
+                            </Button>
+                            <Button
+                              variant="outline"
+                              size="icon"
+                              className="border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 bg-transparent"
+                            >
+                              <Edit className="h-4 w-4" />
+                            </Button>
+                            <Button
+                              variant="outline"
+                              size="icon"
+                              className="border-gray-200 dark:border-gray-700 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 bg-transparent"
+                            >
+                              <Trash2 className="h-4 w-4" />
+                            </Button>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </TabsContent>
+                <TabsContent value="documents" className="space-y-4">
+                  {resourcesData
+                    .filter((resource) => resource.type === "document")
+                    .map((resource) => (
+                      <Card key={resource.id} className="glass dark:bg-gray-800/80 card-hover">
+                        <CardContent className="p-0">
+                          <div className="flex flex-col sm:flex-row sm:items-center justify-between p-6">
+                            <div className="flex items-start sm:items-center">
+                              <div className="p-2 rounded-lg bg-gray-100 dark:bg-gray-700 mr-4">
+                                <FileText className="h-6 w-6 text-blue-500 dark:text-blue-400" />
+                              </div>
+                              <div className="flex-1">
+                                <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                                  {resource.title}
+                                </h3>
+                                <div className="flex flex-wrap gap-4 mt-2">
+                                  <span className="inline-flex items-center text-xs font-medium px-2.5 py-0.5 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">
+                                    {resource.format}
+                                  </span>
+                                  <span className="text-sm text-gray-500 dark:text-gray-400">{resource.size}</span>
+                                  <span className="text-sm text-gray-500 dark:text-gray-400">{resource.subject}</span>
+                                </div>
+                                <div className="flex items-center mt-2 text-sm text-gray-500 dark:text-gray-400">
+                                  <span>Uploaded on {resource.uploadDate}</span>
+                                  <span className="mx-2">•</span>
+                                  <span>{resource.downloads} downloads</span>
+                                </div>
+                              </div>
+                            </div>
+                            <div className="flex items-center mt-4 sm:mt-0 space-x-2">
+                              <Button
+                                variant="outline"
+                                size="icon"
+                                className="border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 bg-transparent"
+                              >
+                                <Eye className="h-4 w-4" />
+                              </Button>
+                              <Button
+                                variant="outline"
+                                size="icon"
+                                className="border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 bg-transparent"
+                              >
+                                <Download className="h-4 w-4" />
+                              </Button>
+                              <Button
+                                variant="outline"
+                                size="icon"
+                                className="border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 bg-transparent"
+                              >
+                                <Edit className="h-4 w-4" />
+                              </Button>
+                              <Button
+                                variant="outline"
+                                size="icon"
+                                className="border-gray-200 dark:border-gray-700 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 bg-transparent"
+                              >
+                                <Trash2 className="h-4 w-4" />
+                              </Button>
+                            </div>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    ))}
+                </TabsContent>
+                <TabsContent value="videos">
+                  {resourcesData
+                    .filter((resource) => resource.type === "video")
+                    .map((resource) => (
+                      <Card key={resource.id} className="glass dark:bg-gray-800/80 card-hover">
+                        <CardContent className="p-0">
+                          <div className="flex flex-col sm:flex-row sm:items-center justify-between p-6">
+                            <div className="flex items-start sm:items-center">
+                              <div className="p-2 rounded-lg bg-gray-100 dark:bg-gray-700 mr-4">
+                                <Video className="h-6 w-6 text-red-500 dark:text-red-400" />
+                              </div>
+                              <div className="flex-1">
+                                <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                                  {resource.title}
+                                </h3>
+                                <div className="flex flex-wrap gap-4 mt-2">
+                                  <span className="inline-flex items-center text-xs font-medium px-2.5 py-0.5 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">
+                                    {resource.format}
+                                  </span>
+                                  <span className="text-sm text-gray-500 dark:text-gray-400">{resource.size}</span>
+                                  <span className="text-sm text-gray-500 dark:text-gray-400">{resource.subject}</span>
+                                </div>
+                                <div className="flex items-center mt-2 text-sm text-gray-500 dark:text-gray-400">
+                                  <span>Uploaded on {resource.uploadDate}</span>
+                                  <span className="mx-2">•</span>
+                                  <span>{resource.downloads} downloads</span>
+                                </div>
+                              </div>
+                            </div>
+                            <div className="flex items-center mt-4 sm:mt-0 space-x-2">
+                              <Button
+                                variant="outline"
+                                size="icon"
+                                className="border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 bg-transparent"
+                              >
+                                <Eye className="h-4 w-4" />
+                              </Button>
+                              <Button
+                                variant="outline"
+                                size="icon"
+                                className="border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 bg-transparent"
+                              >
+                                <Download className="h-4 w-4" />
+                              </Button>
+                              <Button
+                                variant="outline"
+                                size="icon"
+                                className="border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 bg-transparent"
+                              >
+                                <Edit className="h-4 w-4" />
+                              </Button>
+                              <Button
+                                variant="outline"
+                                size="icon"
+                                className="border-gray-200 dark:border-gray-700 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 bg-transparent"
+                              >
+                                <Trash2 className="h-4 w-4" />
+                              </Button>
+                            </div>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    ))}
+                </TabsContent>
+                <TabsContent value="images">
+                  {resourcesData
+                    .filter((resource) => resource.type === "image")
+                    .map((resource) => (
+                      <Card key={resource.id} className="glass dark:bg-gray-800/80 card-hover">
+                        <CardContent className="p-0">
+                          <div className="flex flex-col sm:flex-row sm:items-center justify-between p-6">
+                            <div className="flex items-start sm:items-center">
+                              <div className="p-2 rounded-lg bg-gray-100 dark:bg-gray-700 mr-4">
+                                <ImageIcon className="h-6 w-6 text-green-500 dark:text-green-400" />
+                              </div>
+                              <div className="flex-1">
+                                <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                                  {resource.title}
+                                </h3>
+                                <div className="flex flex-wrap gap-4 mt-2">
+                                  <span className="inline-flex items-center text-xs font-medium px-2.5 py-0.5 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">
+                                    {resource.format}
+                                  </span>
+                                  <span className="text-sm text-gray-500 dark:text-gray-400">{resource.size}</span>
+                                  <span className="text-sm text-gray-500 dark:text-gray-400">{resource.subject}</span>
+                                </div>
+                                <div className="flex items-center mt-2 text-sm text-gray-500 dark:text-gray-400">
+                                  <span>Uploaded on {resource.uploadDate}</span>
+                                  <span className="mx-2">•</span>
+                                  <span>{resource.downloads} downloads</span>
+                                </div>
+                              </div>
+                            </div>
+                            <div className="flex items-center mt-4 sm:mt-0 space-x-2">
+                              <Button
+                                variant="outline"
+                                size="icon"
+                                className="border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 bg-transparent"
+                              >
+                                <Eye className="h-4 w-4" />
+                              </Button>
+                              <Button
+                                variant="outline"
+                                size="icon"
+                                className="border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 bg-transparent"
+                              >
+                                <Download className="h-4 w-4" />
+                              </Button>
+                              <Button
+                                variant="outline"
+                                size="icon"
+                                className="border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 bg-transparent"
+                              >
+                                <Edit className="h-4 w-4" />
+                              </Button>
+                              <Button
+                                variant="outline"
+                                size="icon"
+                                className="border-gray-200 dark:border-gray-700 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 bg-transparent"
+                              >
+                                <Trash2 className="h-4 w-4" />
+                              </Button>
+                            </div>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    ))}
+                </TabsContent>
+              </Tabs>
+            </div>
+
+            <div>
+              <Card className="glass dark:bg-gray-800/80">
+                <CardHeader>
+                  <CardTitle className="text-gray-900 dark:text-white">Resource Stats</CardTitle>
+                  <CardDescription className="text-gray-600 dark:text-gray-300">
+                    Overview of your learning materials
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-6">
+                  <div>
+                    <h4 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Storage Used</h4>
+                    <div className="space-y-2">
+                      <div className="flex justify-between text-sm">
+                        <span className="text-gray-600 dark:text-gray-400">52.9 MB of 1 GB</span>
+                        <span className="text-gray-600 dark:text-gray-400">5.29%</span>
+                      </div>
+                      <Progress value={5.29} className="h-2" />
+                    </div>
+                  </div>
+                  <div>
+                    <h4 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Resource Types</h4>
+                    <div className="space-y-2">
+                      <div className="flex justify-between items-center">
+                        <div className="flex items-center">
+                          <div className="w-3 h-3 rounded-full bg-blue-500 dark:bg-blue-400 mr-2"></div>
+                          <span className="text-sm text-gray-600 dark:text-gray-400">Documents</span>
+                        </div>
+                        <span className="text-sm font-medium text-gray-700 dark:text-gray-300">24</span>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <div className="flex items-center">
+                          <div className="w-3 h-3 rounded-full bg-red-500 dark:bg-red-400 mr-2"></div>
+                          <span className="text-sm text-gray-600 dark:text-gray-400">Videos</span>
+                        </div>
+                        <span className="text-sm font-medium text-gray-700 dark:text-gray-300">8</span>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <div className="flex items-center">
+                          <div className="w-3 h-3 rounded-full bg-green-500 dark:bg-green-400 mr-2"></div>
+                          <span className="text-sm text-gray-600 dark:text-gray-400">Images</span>
+                        </div>
+                        <span className="text-sm font-medium text-gray-700 dark:text-gray-300">15</span>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <div className="flex items-center">
+                          <div className="w-3 h-3 rounded-full bg-yellow-500 dark:bg-yellow-400 mr-2"></div>
+                          <span className="text-sm text-gray-600 dark:text-gray-400">Other</span>
+                        </div>
+                        <span className="text-sm font-medium text-gray-700 dark:text-gray-300">3</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div>
+                    <h4 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Most Downloaded</h4>
+                    <div className="space-y-3">
+                      <div className="flex items-center">
+                        <FileText className="h-4 w-4 text-blue-500 dark:text-blue-400 mr-2" />
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm font-medium text-gray-900 dark:text-white truncate">
+                            Chemistry Periodic Table
+                          </p>
+                          <p className="text-xs text-gray-500 dark:text-gray-400">215 downloads</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center">
+                        <FileText className="h-4 w-4 text-blue-500 dark:text-blue-400 mr-2" />
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm font-medium text-gray-900 dark:text-white truncate">
+                            Computer Science Algorithms
+                          </p>
+                          <p className="text-xs text-gray-500 dark:text-gray-400">156 downloads</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center">
+                        <FileText className="h-4 w-4 text-blue-500 dark:text-blue-400 mr-2" />
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm font-medium text-gray-900 dark:text-white truncate">
+                            Advanced Mathematics Notes
+                          </p>
+                          <p className="text-xs text-gray-500 dark:text-gray-400">128 downloads</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
