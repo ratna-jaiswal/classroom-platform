@@ -174,3 +174,6 @@
     animation-delay: 4s;
   }
 }
+html {
+  scroll-behavior: smooth;
+}

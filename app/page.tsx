@@ -17,6 +17,7 @@ import {
   Play,
   Calendar,
   MessageSquare,
+  Mail,
 } from "lucide-react"
 
 export default function HomePage() {
@@ -76,7 +77,7 @@ export default function HomePage() {
       </header>
 
       {/* Hero Section */}
-      <section className="relative z-10 py-20">
+      <section id="hero" className="relative z-10 py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="max-w-4xl mx-auto">
             <Badge className="mb-6 bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 hover:bg-blue-200 dark:hover:bg-blue-800 px-4 py-2">
@@ -118,7 +119,7 @@ export default function HomePage() {
       </section>
 
       {/* Stats Section */}
-      <section className="relative z-10 py-16 bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm">
+      <section id="stats" className="relative z-10 py-16 bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {[
@@ -142,7 +143,7 @@ export default function HomePage() {
       </section>
 
       {/* Features Section */}
-      <section className="relative z-10 py-20">
+      <section id="features" className="relative z-10 py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-4">
@@ -215,6 +216,39 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Contact Reference Section */}
+      <section className="relative z-10 py-16 bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-3xl p-8 md:p-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+              Need Help or Have Questions?
+            </h2>
+            <p className="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
+              Our support team is here to assist you. Whether you need technical help, have questions about features, or want to provide feedback.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Button
+                size="lg"
+                variant="secondary"
+                onClick={() => router.push("/contact")}
+                className="btn-animate bg-white text-blue-600 hover:bg-gray-50 px-8 py-4 text-lg"
+              >
+                <MessageSquare className="mr-2 h-5 w-5" />
+                Contact Support
+              </Button>
+              <Button
+                size="lg"
+                variant="outline"
+                className="btn-animate border-2 border-white text-blue-600 hover:bg-gray-50  hover:text-blue-600 px-8 py-4 text-lg"
+              >
+                <Mail className="mr-2 h-5 w-5" />
+                Email Us
+              </Button>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* CTA Section */}
       <section className="relative z-10 py-20 bg-gradient-to-r from-blue-600 to-purple-600">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -236,7 +270,7 @@ export default function HomePage() {
               size="lg"
               variant="outline"
               onClick={() => router.push("/login/teacher")}
-              className="btn-animate border-2 border-white text-white hover:bg-white hover:text-blue-600 px-8 py-4 text-lg"
+              className="btn-animate border-2 border-white text-blue-600 hover:bg-gray-50  hover:text-blue-600 px-8 py-4 text-lg"
             >
               Join as Teacher
               <ArrowRight className="ml-2 h-5 w-5" />
@@ -269,11 +303,16 @@ export default function HomePage() {
               <ul className="space-y-2 text-gray-400">
                 <li>
                   <a href="#" className="hover:text-white transition-colors">
+                    Home
+                  </a>
+                </li>
+                <li>
+                  <a href="#hero" className="hover:text-white transition-colors">
                     About Us
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-white transition-colors">
+                  <a href="#features" className="hover:text-white transition-colors">
                     Features
                   </a>
                 </li>
@@ -283,9 +322,12 @@ export default function HomePage() {
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-white transition-colors">
+                  <button
+                    onClick={() => router.push("/contact")}
+                    className="hover:text-white transition-colors text-left"
+                  >
                     Contact
-                  </a>
+                  </button>
                 </li>
               </ul>
             </div>
@@ -316,7 +358,7 @@ export default function HomePage() {
             </div>
           </div>
           <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-            <p>&copy; 2024 SikshaLink. All rights reserved. Built with ❤️ for education.</p>
+            <p>&copy; 2025 SikshaLink. All rights reserved. Built with ❤️ for education.</p>
           </div>
         </div>
       </footer>
