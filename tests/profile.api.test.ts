@@ -1,4 +1,4 @@
-// @ts-ignore
+// @ts-expect-error: Jest does not export these as named exports; this import is for test context compatibility.
 import { describe, it, expect, jest, beforeEach } from 'jest';
 import { NextRequest } from 'next/server';
 
