@@ -56,13 +56,13 @@ export async function connectToDatabase() {
     console.log('🔄 Connecting to MongoDB...');
     
     cached.promise = mongoose.connect(MONGODB_URI, mongooseOptions)
-      .then((mongoose) => {
+      .then((mongoose: typeof import('mongoose')) => {
         console.log('✅ Successfully connected to MongoDB');
         console.log(`📊 Database: ${mongoose.connection.name}`);
         console.log(`🌐 Host: ${mongoose.connection.host}:${mongoose.connection.port}`);
         
         // Set up connection event listeners
-        mongoose.connection.on('error', (error) => {
+        mongoose.connection.on('error', (error: Error) => {
           console.error('❌ MongoDB connection error:', error);
         });
         
@@ -76,7 +76,7 @@ export async function connectToDatabase() {
         
         return mongoose;
       })
-      .catch((error) => {
+      .catch((error: Error) => {
         console.error('❌ Failed to connect to MongoDB:', error);
         throw error;
       });
@@ -84,7 +84,7 @@ export async function connectToDatabase() {
 
   try {
     cached.conn = await cached.promise;
-  } catch (error) {
+  } catch (error: any) {
     cached.promise = null;
     console.error('❌ MongoDB connection failed:', error);
     throw error;

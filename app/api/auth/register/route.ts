@@ -20,7 +20,7 @@ export const POST = withErrorHandling(async (request: NextRequest) => {
   await connectToDatabase();
   
   // Check if user already exists
-  const existingUser = await User.findByEmail(validatedData.email);
+  const existingUser = await User.findOne({ email: validatedData.email.toLowerCase() });
   if (existingUser) {
     return conflictResponse('User', 'email');
   }
