@@ -9,6 +9,35 @@ import {
   withErrorHandling 
 } from '@/lib/response';
 
+/**
+ * POST /api/auth/login
+ * 
+ * Authenticates a user and provides JWT token via HTTP-only cookie
+ * 
+ * @param request - The incoming request containing user credentials
+ * @returns JSON response with user data and sets JWT cookie
+ * 
+ * @example
+ * ```json
+ * // Request body:
+ * {
+ *   "email": "john@example.com",
+ *   "password": "SecurePass123"
+ * }
+ * 
+ * // Response:
+ * {
+ *   "success": true,
+ *   "message": "Login successful",
+ *   "data": {
+ *     "id": "...",
+ *     "name": "John Doe", 
+ *     "email": "john@example.com",
+ *     "role": "student"
+ *   }
+ * }
+ * ```
+ */
 export const POST = withErrorHandling(async (request: NextRequest) => {
   // Parse request body
   const body = await request.json();

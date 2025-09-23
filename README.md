@@ -39,6 +39,7 @@ SikshaLink is a next-generation learning management system that connects student
 
 - Node.js (v18 or later)
 - pnpm (v8 or later)
+- MongoDB (v4.4 or later) - Can be local installation or MongoDB Atlas
 
 ### Installation
 
@@ -53,12 +54,44 @@ SikshaLink is a next-generation learning management system that connects student
    pnpm install
    ```
 
-3. Start the development server:
+3. Set up environment variables:
+   ```bash
+   cp .env.example .env.local
+   ```
+   
+   Update `.env.local` with your configuration:
+   ```bash
+   # Database Configuration
+   MONGODB_URI=mongodb://localhost:27017/sikshalink
+   # or for MongoDB Atlas:
+   # MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/sikshalink
+
+   # JWT Configuration  
+   JWT_SECRET=your-super-secret-jwt-key-here-minimum-32-characters
+   JWT_EXPIRES_IN=7d
+
+   # App Configuration
+   NODE_ENV=development
+   ```
+
+4. Start MongoDB (if using local installation):
+   ```bash
+   # On Windows
+   mongod
+
+   # On macOS (with Homebrew)
+   brew services start mongodb-community
+
+   # On Linux
+   sudo systemctl start mongod
+   ```
+
+5. Start the development server:
    ```bash
    pnpm dev
    ```
 
-4. Open [http://localhost:3000](http://localhost:3000) in your browser.
+6. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ## 🏗️ Project Structure
 
@@ -87,14 +120,48 @@ classroom-platform/
 - [Radix UI](https://www.radix-ui.com/) - Accessible UI components
 - [Lucide React](https://lucide.dev/) - Icon library
 
-### Backend (To Be Implemented)
-We are looking for contributions to build the backend with:
-- Node.js/Express.js or Next.js API routes
-- MongoDB or PostgreSQL
-- Authentication with NextAuth.js
-- Real-time features with Socket.io or similar
+### Backend
+- [Next.js API Routes](https://nextjs.org/docs/api-routes/introduction) - Serverless API endpoints
+- [MongoDB](https://www.mongodb.com/) - NoSQL database with Mongoose ODM
+- [JWT Authentication](https://jwt.io/) - Secure user authentication with HTTP-only cookies
+- [bcryptjs](https://www.npmjs.com/package/bcryptjs) - Password hashing
+- [Zod](https://zod.dev/) - TypeScript-first schema validation
 
-## 👥 Contributing
+## � API Documentation
+
+### Authentication Endpoints
+
+The platform includes a complete JWT-based authentication system:
+
+| Method | Endpoint | Description | Body |
+|--------|----------|-------------|------|
+| POST | `/api/auth/register` | User registration | `{ name, email, password, role }` |
+| POST | `/api/auth/login` | User login | `{ email, password }` |
+| POST | `/api/auth/logout` | User logout | - |
+| GET | `/api/users/me` | Get user profile | - |
+| PUT | `/api/users/me` | Update user profile | `{ name?, profile? }` |
+
+### Example Usage
+
+```bash
+# Register a new user
+curl -X POST "http://localhost:3000/api/auth/register" \
+  -H "Content-Type: application/json" \
+  -d '{"name":"John Doe","email":"john@example.com","password":"SecurePass123","role":"student"}'
+
+# Login
+curl -X POST "http://localhost:3000/api/auth/login" \
+  -H "Content-Type: application/json" \
+  -d '{"email":"john@example.com","password":"SecurePass123"}'
+
+# Get profile (requires authentication cookie)
+curl -X GET "http://localhost:3000/api/users/me" \
+  -H "Cookie: token=YOUR_JWT_TOKEN"
+```
+
+For detailed API documentation, see [docs/API.md](docs/API.md).
+
+## �👥 Contributing
 
 SikshaLink is open for contributions as part of GSSoC 2025! We welcome developers of all skill levels. Please read our [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines.
 
@@ -106,16 +173,29 @@ SikshaLink is open for contributions as part of GSSoC 2025! We welcome developer
 - Improving accessibility
 - Bug fixes and UI improvements
 
-## 🛠️ Backend Development
+## 🛠️ Development Status
 
-The project currently has a frontend interface and needs backend implementation. Priority areas:
+### ✅ Completed Features
+- **Authentication System**: Complete JWT-based authentication with registration, login, logout
+- **User Management**: User profiles with role-based access (student, teacher, admin)
+- **Database Integration**: MongoDB with Mongoose ODM and optimized connections
+- **Type Safety**: Full TypeScript implementation with comprehensive type definitions
+- **API Documentation**: Complete API reference with examples and error codes
+- **Security**: Password hashing, secure cookies, input validation
 
-- User authentication and authorization
-- Database models and relationships
-- API endpoints for all features
-- File upload and management
+### 🚧 In Progress
+- Role-based access control middleware
+- Frontend authentication integration
+- Profile management UI
+
+### 📋 Planned Features
+- Assignment management system
+- Live class scheduling and management
+- Attendance tracking
+- Resource sharing and management
 - Real-time notifications
-- Testing and documentation
+- Fee management system
+- Mentorship platform integration
 
 ## 🎨 Frontend Development
 

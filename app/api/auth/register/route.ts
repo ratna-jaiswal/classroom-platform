@@ -9,6 +9,37 @@ import {
   withErrorHandling 
 } from '@/lib/response';
 
+/**
+ * POST /api/auth/register
+ * 
+ * Registers a new user in the system
+ * 
+ * @param request - The incoming request containing user registration data
+ * @returns JSON response with user data and JWT token via HTTP-only cookie
+ * 
+ * @example
+ * ```json
+ * // Request body:
+ * {
+ *   "name": "John Doe",
+ *   "email": "john@example.com", 
+ *   "password": "SecurePass123",
+ *   "role": "student"
+ * }
+ * 
+ * // Response:
+ * {
+ *   "success": true,
+ *   "message": "User created successfully",
+ *   "data": {
+ *     "id": "...",
+ *     "name": "John Doe",
+ *     "email": "john@example.com",
+ *     "role": "student"
+ *   }
+ * }
+ * ```
+ */
 export const POST = withErrorHandling(async (request: NextRequest) => {
   // Parse request body
   const body = await request.json();
