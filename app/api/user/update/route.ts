@@ -81,7 +81,7 @@ export async function PUT(request: NextRequest) {
       }
       
       if (validatedData.profile.dateOfBirth !== undefined) {
-        user.profile.dateOfBirth = validatedData.profile.dateOfBirth ? new Date(validatedData.profile.dateOfBirth) : undefined;
+        user.profile.dateOfBirth = validatedData.profile.dateOfBirth ? new Date(validatedData.profile.dateOfBirth) : null;
       }
       
       if (validatedData.profile.address !== undefined) {
