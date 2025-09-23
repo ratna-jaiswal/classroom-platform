@@ -1,5 +1,3 @@
-// @ts-ignore
-import { describe, it, expect, jest, beforeEach } from 'jest';
 import { NextRequest, NextResponse } from 'next/server';
 
 // Mock Next.js modules
