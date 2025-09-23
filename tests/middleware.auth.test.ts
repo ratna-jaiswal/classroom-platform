@@ -1,5 +1,3 @@
-// @ts-ignore
-import { describe, it, expect, jest, beforeEach } from 'jest';
 import { NextRequest } from 'next/server';
 import { 
   withAuth, 
