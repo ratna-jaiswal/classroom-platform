@@ -1,5 +1,3 @@
-// @ts-ignore
-import { describe, it, expect, jest, beforeEach, afterEach } from 'jest';
 import bcrypt from 'bcryptjs';
 
 // Mock mongoose
