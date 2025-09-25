@@ -79,19 +79,19 @@ export default function StudentDashboard() {
                 </div>
               </div>
               <div className="mt-6 grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4">
+                <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 transition-transform hover:scale-105"> {/* MODIFIED */}
                   <div className="text-2xl font-bold">85%</div>
                   <div className="text-sm text-blue-100 dark:text-blue-200">Overall Progress</div>
                 </div>
-                <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4">
+                <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 transition-transform hover:scale-105"> {/* MODIFIED */}
                   <div className="text-2xl font-bold">12</div>
                   <div className="text-sm text-blue-100 dark:text-blue-200">Courses</div>
                 </div>
-                <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4">
+                <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 transition-transform hover:scale-105"> {/* MODIFIED */}
                   <div className="text-2xl font-bold">98%</div>
                   <div className="text-sm text-blue-100 dark:text-blue-200">Attendance</div>
                 </div>
-                <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4">
+                <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 transition-transform hover:scale-105"> {/* MODIFIED */}
                   <div className="text-2xl font-bold">A+</div>
                   <div className="text-sm text-blue-100 dark:text-blue-200">Average Grade</div>
                 </div>
@@ -153,7 +153,7 @@ export default function StudentDashboard() {
                   {upcomingClasses.map((class_, index) => (
                     <div
                       key={index}
-                      className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700/50 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                      className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700/50 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-700 hover:-translate-y-0.5 transition-all" // MODIFIED
                     >
                       <div className="flex items-center space-x-4">
                         <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl flex items-center justify-center">
@@ -191,7 +191,7 @@ export default function StudentDashboard() {
                       </CardDescription>
                     </div>
                   </div>
-                  <Button variant="outline" size="sm" onClick={() => router.push("/assignments")}>
+                  <Button variant="outline" size="sm" onClick={() => router.push("/assignments")} className="btn-animate"> {/* MODIFIED */}
                     View All
                   </Button>
                 </div>
@@ -201,7 +201,7 @@ export default function StudentDashboard() {
                   {recentAssignments.map((assignment, index) => (
                     <div
                       key={index}
-                      className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700/50 rounded-xl"
+                      className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700/50 rounded-xl transition-colors hover:bg-gray-100 dark:hover:bg-gray-700" // MODIFIED
                     >
                       <div className="flex items-center space-x-4">
                         <div
@@ -287,7 +287,7 @@ export default function StudentDashboard() {
                   {achievements.map((achievement, index) => (
                     <div
                       key={index}
-                      className="flex items-center space-x-3 p-3 bg-gray-50 dark:bg-gray-700/50 rounded-xl"
+                      className="flex items-center space-x-3 p-3 bg-gray-50 dark:bg-gray-700/50 rounded-xl transition-colors hover:bg-gray-100 dark:hover:bg-gray-700" // MODIFIED
                     >
                       <div
                         className={`w-10 h-10 rounded-xl bg-gray-100 dark:bg-gray-600 flex items-center justify-center`}
@@ -319,19 +319,19 @@ export default function StudentDashboard() {
               </CardHeader>
               <CardContent>
                 <div className="grid grid-cols-2 gap-4">
-                  <div className="text-center p-4 bg-blue-50 dark:bg-blue-900/20 rounded-xl">
+                  <div className="text-center p-4 bg-blue-50 dark:bg-blue-900/20 rounded-xl transition-transform hover:scale-105"> {/* MODIFIED */}
                     <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">12</div>
                     <div className="text-sm text-gray-600 dark:text-gray-400">Active Courses</div>
                   </div>
-                  <div className="text-center p-4 bg-green-50 dark:bg-green-900/20 rounded-xl">
+                  <div className="text-center p-4 bg-green-50 dark:bg-green-900/20 rounded-xl transition-transform hover:scale-105"> {/* MODIFIED */}
                     <div className="text-2xl font-bold text-green-600 dark:text-green-400">8</div>
                     <div className="text-sm text-gray-600 dark:text-gray-400">Completed</div>
                   </div>
-                  <div className="text-center p-4 bg-purple-50 dark:bg-purple-900/20 rounded-xl">
+                  <div className="text-center p-4 bg-purple-50 dark:bg-purple-900/20 rounded-xl transition-transform hover:scale-105"> {/* MODIFIED */}
                     <div className="text-2xl font-bold text-purple-600 dark:text-purple-400">24</div>
                     <div className="text-sm text-gray-600 dark:text-gray-400">Assignments</div>
                   </div>
-                  <div className="text-center p-4 bg-yellow-50 dark:bg-yellow-900/20 rounded-xl">
+                  <div className="text-center p-4 bg-yellow-50 dark:bg-yellow-900/20 rounded-xl transition-transform hover:scale-105"> {/* MODIFIED */}
                     <div className="text-2xl font-bold text-yellow-600 dark:text-yellow-400">5</div>
                     <div className="text-sm text-gray-600 dark:text-gray-400">Certificates</div>
                   </div>
