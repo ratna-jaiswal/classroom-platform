@@ -23,7 +23,7 @@ describe('Auth Validation Schemas', () => {
       role: 'student',
     };
 
-    const result = loginSchema.safeParse(invalidData);
+    const result = registerSchema.safeParse(invalidData);
     expect(result.success).toBe(false);
   });
 });
