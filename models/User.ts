@@ -19,10 +19,6 @@ export interface IUser extends Document {
   comparePassword(candidatePassword: string): Promise<boolean>;
 }
 
-interface IUserModel extends Model<IUser> {
-  findByEmail(email: string): Promise<IUser | null>;
-}
-
 const userSchema = new Schema<IUser>(
   {
     name: {
@@ -91,7 +87,7 @@ const userSchema = new Schema<IUser>(
     timestamps: true,
     toJSON: {
       transform: function (doc, ret) {
-        delete ret.password;
+        delete (ret as any).password;
         return ret;
       },
     },
@@ -125,12 +121,7 @@ userSchema.methods.comparePassword = async function (candidatePassword: string):
   }
 };
 
-// Static method to find user by email
-userSchema.statics.findByEmail = function (email: string) {
-  return this.findOne({ email: email.toLowerCase() });
-};
-
-// Prevent duplicate model compilation
-const User: IUserModel = mongoose.models.User || mongoose.model<IUser, IUserModel>('User', userSchema);
+// Create and export the User model
+const User = mongoose.models.User || mongoose.model<IUser>('User', userSchema);
 
 export default User;
