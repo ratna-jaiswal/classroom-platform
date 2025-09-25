@@ -36,16 +36,34 @@ export default function DoubtsPage() {
   const [doubts, setDoubts] = useState<Doubt[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [userId, setUserId] = useState<string | null>(null)
+
+  // Faculty label mapping
+  const facultyLabelMap: Record<string, string> = {
+    'prof-smith': 'Prof. Smith (Mathematics)',
+    'prof-johnson': 'Prof. Johnson (Chemistry)',
+    'prof-davis': 'Prof. Davis (Physics)',
+  }
+
+  const getFacultyLabel = (value?: string) => {
+    return value ? (facultyLabelMap[value] ?? value) : ''
+  }
 
   useEffect(() => {
     const type = localStorage.getItem("userType")
     const name = localStorage.getItem("userName") || "Anonymous User"
+    const id = localStorage.getItem("userId") || Date.now().toString()
     if (!type) {
       router.push("/")
       return
     }
     setUserType(type)
     setUserName(name)
+    setUserId(id)
+    // Store userId if it doesn't exist
+    if (!localStorage.getItem("userId")) {
+      localStorage.setItem("userId", id)
+    }
     fetchDoubts()
   }, [router])
 
@@ -78,6 +96,7 @@ export default function DoubtsPage() {
 
   const formatTimestamp = (dateString: string) => {
     const date = new Date(dateString)
+    if (Number.isNaN(date.getTime())) return ""
     const now = new Date()
     const diffInHours = Math.floor((now.getTime() - date.getTime()) / (1000 * 60 * 60))
     
@@ -115,7 +134,7 @@ export default function DoubtsPage() {
           topic: selectedTopic,
           mentionedFaculty,
           author: {
-            id: Date.now().toString(), // Temporary ID - in real app, get from auth
+            id: userId || Date.now().toString(),
             name: userName,
           },
         }),
@@ -314,7 +333,7 @@ export default function DoubtsPage() {
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">
-                {doubts.filter(doubt => doubt.author.name === userName).length}
+                {userId ? doubts.filter(d => d.author.id === userId).length : 0}
               </div>
             </CardContent>
           </Card>
@@ -387,7 +406,7 @@ export default function DoubtsPage() {
                       {doubt.mentionedFaculty && (
                         <div className="flex items-center space-x-1">
                           <User className="h-3 w-3" />
-                          <span>{doubt.mentionedFaculty}</span>
+                          <span>{getFacultyLabel(doubt.mentionedFaculty)}</span>
                         </div>
                       )}
                     </div>

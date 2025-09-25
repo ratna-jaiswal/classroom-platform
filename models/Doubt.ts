@@ -15,5 +15,3 @@ export interface Doubt {
   createdAt: string;
   updatedAt: string;
 }
-
-export default Doubt;
