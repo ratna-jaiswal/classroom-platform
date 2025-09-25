@@ -2,22 +2,76 @@
 
 This guide helps contributors set up their development environment for building the SikshaLink backend.
 
+## 🚀 Quick Start
+
+The authentication system is already implemented! To get started:
+
+1. **Clone and install dependencies:**
+   ```bash
+   git clone https://github.com/ratna-jaiswal/classroom-platform.git
+   cd classroom-platform
+   pnpm install
+   ```
+
+2. **Set up environment variables:**
+   Create `.env.local` in the root directory:
+   ```env
+   MONGODB_URI=mongodb://localhost:27017/classroom-platform
+   JWT_SECRET=your-super-secret-jwt-key-here
+   NEXTAUTH_URL=http://localhost:3000
+   NEXTAUTH_SECRET=your-nextauth-secret-here
+   ```
+
+3. **Start MongoDB:**
+   ```bash
+   # Windows
+   net start MongoDB
+   
+   # macOS
+   brew services start mongodb-community
+   
+   # Linux
+   sudo systemctl start mongod
+   ```
+
+4. **Run the development server:**
+   ```bash
+   pnpm dev
+   ```
+
+5. **Test the API:**
+   - Server runs on `http://localhost:3000`
+   - API endpoints available at `/api/*`
+   - Authentication system fully functional
+
+## ✅ Current Implementation Status
+
+### Completed Features
+- **Authentication System**: Registration, login, logout with JWT
+- **Database Integration**: MongoDB with Mongoose ODM
+- **User Management**: User model with role-based access (student/teacher)
+- **Security**: Password hashing, HTTP-only cookies, input validation
+- **TypeScript**: Full type safety across the application
+- **API Documentation**: Comprehensive endpoint documentation
+
+### API Endpoints Available
+- `POST /api/auth/register` - User registration
+- `POST /api/auth/login` - User authentication
+- `POST /api/auth/logout` - User logout
+- `GET /api/users/me` - Get current user profile
+
 ## Prerequisites
 
 - Node.js v18+ installed
 - pnpm v8+ installed
-- MongoDB/PostgreSQL (based on your preference)
+- MongoDB (local or Atlas)
 - Git
 
-## Recommended Tech Stack
+## Current Tech Stack
 
-We recommend the following technology stack for backend development:
-
-1. **Framework**: Express.js or Next.js API Routes
-2. **Database**:
-   - MongoDB with Mongoose (document-oriented)
-   - PostgreSQL with Prisma (relational)
-3. **Authentication**: JWT or NextAuth.js
+✅ **Framework**: Next.js 15.2.4 with API Routes
+✅ **Database**: MongoDB with Mongoose ODM
+✅ **Authentication**: JWT with HTTP-only cookies
 4. **Validation**: Zod or Joi
 5. **Testing**: Jest + Supertest
 
