@@ -116,6 +116,13 @@
   .animation-delay-4000 {
     animation-delay: 4s;
   }
+  .nav-link-hover {
+    @apply rounded-lg transition-all duration-200 hover:bg-muted/70 dark:hover:bg-muted/50 hover:-translate-y-px;
+  }
+  
+  .icon-btn-hover {
+    @apply rounded-full transition-all duration-300 hover:scale-110 hover:shadow-lg hover:bg-accent;
+  }
 }
 
 @keyframes slideInUp {
@@ -174,6 +181,7 @@
     animation-delay: 4s;
   }
 }
+
 html {
   scroll-behavior: smooth;
 }

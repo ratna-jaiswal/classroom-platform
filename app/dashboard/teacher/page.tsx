@@ -80,19 +80,19 @@ export default function TeacherDashboard() {
                 </div>
               </div>
               <div className="mt-6 grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4">
+                <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 transition-transform hover:scale-105"> 
                   <div className="text-2xl font-bold">77</div>
                   <div className="text-sm text-emerald-100 dark:text-emerald-200">Total Students</div>
                 </div>
-                <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4">
+                <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 transition-transform hover:scale-105"> 
                   <div className="text-2xl font-bold">3</div>
                   <div className="text-sm text-emerald-100 dark:text-emerald-200">Active Courses</div>
                 </div>
-                <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4">
+                <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 transition-transform hover:scale-105"> 
                   <div className="text-2xl font-bold">85%</div>
                   <div className="text-sm text-emerald-100 dark:text-emerald-200">Avg. Performance</div>
                 </div>
-                <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4">
+                <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 transition-transform hover:scale-105"> 
                   <div className="text-2xl font-bold">12</div>
                   <div className="text-sm text-emerald-100 dark:text-emerald-200">Pending Reviews</div>
                 </div>
@@ -171,7 +171,7 @@ export default function TeacherDashboard() {
                   {upcomingClasses.map((class_, index) => (
                     <div
                       key={index}
-                      className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700/50 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                      className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700/50 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-700 hover:-translate-y-0.5 transition-all" 
                     >
                       <div className="flex items-center space-x-4">
                         <div className="w-12 h-12 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-xl flex items-center justify-center">
@@ -209,7 +209,7 @@ export default function TeacherDashboard() {
                       </CardDescription>
                     </div>
                   </div>
-                  <Button variant="outline" size="sm" onClick={() => router.push("/analytics")}>
+                  <Button variant="outline" size="sm" onClick={() => router.push("/analytics")} className="btn-animate"> 
                     View Details
                   </Button>
                 </div>
@@ -262,7 +262,7 @@ export default function TeacherDashboard() {
                   {recentActivities.map((activity, index) => (
                     <div
                       key={index}
-                      className="flex items-center space-x-3 p-3 bg-gray-50 dark:bg-gray-700/50 rounded-xl"
+                      className="flex items-center space-x-3 p-3 bg-gray-50 dark:bg-gray-700/50 rounded-xl transition-colors hover:bg-gray-100 dark:hover:bg-gray-700" 
                     >
                       <div className="w-10 h-10 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-xl flex items-center justify-center">
                         <CheckCircle className="h-5 w-5 text-white" />
@@ -297,14 +297,14 @@ export default function TeacherDashboard() {
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
-                  <div className="flex items-center justify-between p-3 bg-red-50 dark:bg-red-900/20 rounded-xl border border-red-100 dark:border-red-800">
+                  <div className="flex items-center justify-between p-3 bg-red-50 dark:bg-red-900/20 rounded-xl border border-red-100 dark:border-red-800 transition-all hover:-translate-y-0.5 hover:bg-red-100 dark:hover:bg-red-900/30"> 
                     <div>
                       <h4 className="font-semibold text-red-900 dark:text-red-300 text-sm">Grade Assignments</h4>
                       <p className="text-xs text-red-600 dark:text-red-400">12 submissions pending</p>
                     </div>
                     <Badge variant="destructive">Urgent</Badge>
                   </div>
-                  <div className="flex items-center justify-between p-3 bg-yellow-50 dark:bg-yellow-900/20 rounded-xl border border-yellow-100 dark:border-yellow-800">
+                  <div className="flex items-center justify-between p-3 bg-yellow-50 dark:bg-yellow-900/20 rounded-xl border border-yellow-100 dark:border-yellow-800 transition-all hover:-translate-y-0.5 hover:bg-yellow-100 dark:hover:bg-yellow-900/30"> 
                     <div>
                       <h4 className="font-semibold text-yellow-900 dark:text-yellow-300 text-sm">Update Attendance</h4>
                       <p className="text-xs text-yellow-600 dark:text-yellow-400">3 classes pending</p>
@@ -313,7 +313,7 @@ export default function TeacherDashboard() {
                       Medium
                     </Badge>
                   </div>
-                  <div className="flex items-center justify-between p-3 bg-blue-50 dark:bg-blue-900/20 rounded-xl border border-blue-100 dark:border-blue-800">
+                  <div className="flex items-center justify-between p-3 bg-blue-50 dark:bg-blue-900/20 rounded-xl border border-blue-100 dark:border-blue-800 transition-all hover:-translate-y-0.5 hover:bg-blue-100 dark:hover:bg-blue-900/30"> 
                     <div>
                       <h4 className="font-semibold text-blue-900 dark:text-blue-300 text-sm">Prepare Materials</h4>
                       <p className="text-xs text-blue-600 dark:text-blue-400">Next week's classes</p>
@@ -324,7 +324,7 @@ export default function TeacherDashboard() {
               </CardContent>
             </Card>
 
-            {/* Quick Stats */}
+            {/* Teaching Stats */}
             <Card className="card-hover border-0 shadow-lg bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm slide-in-right">
               <CardHeader>
                 <div className="flex items-center space-x-3">
@@ -339,19 +339,19 @@ export default function TeacherDashboard() {
               </CardHeader>
               <CardContent>
                 <div className="grid grid-cols-2 gap-4">
-                  <div className="text-center p-4 bg-emerald-50 dark:bg-emerald-900/20 rounded-xl">
+                  <div className="text-center p-4 bg-emerald-50 dark:bg-emerald-900/20 rounded-xl transition-transform hover:scale-105"> 
                     <div className="text-2xl font-bold text-emerald-600 dark:text-emerald-400">77</div>
                     <div className="text-sm text-gray-600 dark:text-gray-400">Students</div>
                   </div>
-                  <div className="text-center p-4 bg-blue-50 dark:bg-blue-900/20 rounded-xl">
+                  <div className="text-center p-4 bg-blue-50 dark:bg-blue-900/20 rounded-xl transition-transform hover:scale-105"> 
                     <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">156</div>
                     <div className="text-sm text-gray-600 dark:text-gray-400">Classes Taught</div>
                   </div>
-                  <div className="text-center p-4 bg-purple-50 dark:bg-purple-900/20 rounded-xl">
+                  <div className="text-center p-4 bg-purple-50 dark:bg-purple-900/20 rounded-xl transition-transform hover:scale-105"> 
                     <div className="text-2xl font-bold text-purple-600 dark:text-purple-400">89</div>
                     <div className="text-sm text-gray-600 dark:text-gray-400">Assignments</div>
                   </div>
-                  <div className="text-center p-4 bg-yellow-50 dark:bg-yellow-900/20 rounded-xl">
+                  <div className="text-center p-4 bg-yellow-50 dark:bg-yellow-900/20 rounded-xl transition-transform hover:scale-105"> 
                     <div className="text-2xl font-bold text-yellow-600 dark:text-yellow-400">4.8</div>
                     <div className="text-sm text-gray-600 dark:text-gray-400">Rating</div>
                   </div>
