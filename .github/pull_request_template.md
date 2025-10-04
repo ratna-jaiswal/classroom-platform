@@ -1,139 +1,47 @@
 # 🛠️ Pull Request Template
 
-## 🏷️ PR Type
-<!--
-Select the type of PR (check one):
-- [ ] 🐞 Bug Fix
-- [ ] ✨ Feature
-- [ ] 🛠️ Improvement / Refactor
-- [ ] 📚 Documentation
--->
-
----
-
 ## 🔗 Related Issue
-<!--
-Link the GitHub issue this PR closes (if applicable).
-Example: `Closes #123`
--->
-- Closes #.
+Closes #<issue-number>
 
 ---
 
-## 📝 Rationale / Motivation
-<!--
-Explain why this change is necessary.
-- What problem does it solve?
-- How does it improve the project?
-- Any relevant context for reviewers.
--->
+## 📝 Description
+This PR adds a **Pull Request template** to the repository.  
+It helps contributors provide **consistent and clear information** when opening PRs.
+
+### Includes:
+- Description of changes
+- Related issues (`Fixes #issue`)
+- Screenshots (if applicable)
+- Type of change (Bug fix, Feature, Enhancement, Documentation)
+- Checklist for self-review and documentation
 
 ---
 
-## ✨ Description of Changes
-<!--
-Summarize changes with details:
-- What files/components were modified
-- Any new functionality added
-- Refactoring, cleanup, or optimizations
-- Nested bullet points for clarity
--->
-
-- **Frontend**
-  - Component A updated
-  - Component B refactored
-- **Backend / API**
-  - Endpoint X optimized
-  - Validation added
-- **Documentation**
-  - Updated README / Added usage example
+## ✅ Changes Made
+- Created `.github/pull_request_template.md`
+- Added sections for description, type of change, testing, checklist, screenshots
+- Added **GSSoC 2025 Points Claim** section
 
 ---
 
-## 🧪 Testing Instructions
-<!--
-Step-by-step guide to test this PR:
-1. Setup or dependencies needed
-2. Actions to perform
-3. Expected results
-4. Mention automated tests coverage
--->
-
-1. Pull branch and run `npm install`
-2. Start local server with `npm start`
-3. Navigate to `/feature-page` and verify functionality
-4. Run tests: `npm test` (all should pass)
-5. Verify edge cases
+## 🧪 How to Test
+1. Open a new PR in the repository
+2. Check that the template appears automatically with all sections
 
 ---
 
-## 👀 Impact Assessment
-<!--
-Analyze the impact of this PR:
-- User-facing changes (UI / UX)
-- Backend/API changes
-- Performance considerations
-- Security implications
-- Cross-browser / device impact
--->
-
----
-
-## 🖼️ Screenshots / GIFs (if applicable)
-<!--
-Add screenshots or GIFs demonstrating user-facing changes
--->
-
----
-
-## ⚡ Checklist
-- [ ] Code follows project’s coding style and guidelines
-- [ ] Changes are tested locally
-- [ ] Automated tests added/updated
+## ✅ Checklist
+- [ ] Code follows project style guidelines
+- [ ] Self-review completed
 - [ ] Documentation updated (if applicable)
-- [ ] User-facing changes are documented
-- [ ] Related issue linked
 - [ ] No new warnings/errors introduced
-- [ ] All reviewers guidance addressed
+- [ ] Tests added/updated (if applicable)
 
 ---
 
-## 🔖 Reviewer Notes
-<!--
-Tips for reviewers to focus on critical areas:
-- Areas with complex logic
-- Known limitations or trade-offs
-- Optional testing scenarios
--->
-
----
-
-## ⚠️ Breaking Changes
-<!--
-Document any backward-incompatible changes:
-- Public APIs
-- Config / env variables
-- Existing workflows
--->
-
----
-
-## 🏆 Optional Enhancements / Future Work
-<!--
-Ideas or improvements that can be implemented later:
-- UI improvements
-- Additional validations
-- Performance optimizations
-- Feature expansions
--->
-
----
-
-## 🎯 Priority / Impact Level
-<!--
-Indicate the priority and expected impact:
-- Low / Medium / High
-- Helps maintainers understand urgency and importance
--->
-- Priority: High
-- Impact: Medium
+## 🎯 GSSoC 2025 Points Claim
+- [ ] Level 1 (Easy) - 10 points
+- [ ] Level 2 (Medium) - 25 points
+- [ ] Level 3 (Hard) - 50 points
+- [ ] Level 4 (Expert) - 100 points
