@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/sikshalink';
+const MONGODB_URI = process.env.MONGODB_URI || '';
 
 if (!MONGODB_URI) {
   throw new Error('Please define the MONGODB_URI environment variable inside .env.local');
@@ -28,7 +28,7 @@ const mongooseOptions = {
   
   // Buffer settings
   bufferCommands: false, // Disable mongoose buffering
-  bufferMaxEntries: 0, // Disable mongoose buffering
+  // bufferMaxEntries: 0, // Disable mongoose buffering
   
   // Connection behavior
   connectTimeoutMS: 10000, // Give up initial connection after 10 seconds
