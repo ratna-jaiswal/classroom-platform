@@ -1,9 +1,16 @@
-import jwt from 'jsonwebtoken';
-import { NextRequest } from 'next/server';
-import { IUser } from '@/models/User';
+import jwt, { SignOptions } from "jsonwebtoken";
+import { NextRequest } from "next/server";
+import { IUser } from "@/models/User";
 
-const JWT_SECRET = process.env.JWT_SECRET || 'your-super-secret-jwt-key-change-this-in-production';
-const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN || '7d';
+const JWT_SECRET =
+  process.env.JWT_SECRET ||
+  "your-super-secret-jwt-key-change-this-in-production";
+const JWT_EXPIRES_IN = (process.env.JWT_EXPIRES_IN || "7d") as `${number}${
+  | "s"
+  | "m"
+  | "h"
+  | "d"
+  | "y"}`;
 
 export interface JwtPayload {
   userId: string;
@@ -23,9 +30,9 @@ export function generateToken(user: IUser): string {
     role: user.role,
   };
 
-  return jwt.sign(payload, JWT_SECRET, {
-    expiresIn: JWT_EXPIRES_IN,
-  });
+  const options: SignOptions = { expiresIn: JWT_EXPIRES_IN };
+
+  return jwt.sign(payload, JWT_SECRET, options);
 }
 
 /**
@@ -36,7 +43,7 @@ export function verifyToken(token: string): JwtPayload | null {
     const decoded = jwt.verify(token, JWT_SECRET) as JwtPayload;
     return decoded;
   } catch (error) {
-    console.error('Token verification failed:', error);
+    console.error("Token verification failed:", error);
     return null;
   }
 }
@@ -45,14 +52,14 @@ export function verifyToken(token: string): JwtPayload | null {
  * Extracts the token from the Authorization header
  */
 export function extractTokenFromHeader(request: NextRequest): string | null {
-  const authHeader = request.headers.get('Authorization');
-  
+  const authHeader = request.headers.get("Authorization");
+
   if (!authHeader) {
     return null;
   }
 
   // Check for Bearer token format
-  if (authHeader.startsWith('Bearer ')) {
+  if (authHeader.startsWith("Bearer ")) {
     return authHeader.substring(7); // Remove 'Bearer ' prefix
   }
 
@@ -62,9 +69,11 @@ export function extractTokenFromHeader(request: NextRequest): string | null {
 /**
  * Middleware function to authenticate requests
  */
-export async function authenticateToken(request: NextRequest): Promise<JwtPayload | null> {
+export async function authenticateToken(
+  request: NextRequest
+): Promise<JwtPayload | null> {
   const token = extractTokenFromHeader(request);
-  
+
   if (!token) {
     return null;
   }
@@ -75,8 +84,11 @@ export async function authenticateToken(request: NextRequest): Promise<JwtPayloa
 /**
  * Check if user has required role
  */
-export function hasRequiredRole(userRole: string, requiredRoles: string[]): boolean {
-  return requiredRoles.includes(userRole) || requiredRoles.includes('any');
+export function hasRequiredRole(
+  userRole: string,
+  requiredRoles: string[]
+): boolean {
+  return requiredRoles.includes(userRole) || requiredRoles.includes("any");
 }
 
 /**
@@ -90,7 +102,7 @@ export function generateRefreshToken(user: IUser): string {
   };
 
   return jwt.sign(payload, JWT_SECRET, {
-    expiresIn: '30d', // Refresh tokens last longer
+    expiresIn: "30d", // Refresh tokens last longer
   });
 }
 
@@ -99,8 +111,8 @@ export function generateRefreshToken(user: IUser): string {
  */
 export const cookieConfig = {
   httpOnly: true,
-  secure: process.env.NODE_ENV === 'production',
-  sameSite: 'strict' as const,
+  secure: process.env.NODE_ENV === "production",
+  sameSite: "strict" as const,
   maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
-  path: '/',
+  path: "/",
 };
