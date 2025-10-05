@@ -1,43 +1,77 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { useState } from "react"
-import { useRouter } from "next/navigation"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Alert, AlertDescription } from "@/components/ui/alert"
-import { ThemeToggle } from "@/components/theme-toggle"
-import { BookOpen, Eye, EyeOff, ArrowLeft, GraduationCap } from "lucide-react"
-import Link from "next/link"
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { ThemeToggle } from "@/components/theme-toggle";
+import { BookOpen, Eye, EyeOff, ArrowLeft, GraduationCap } from "lucide-react";
+import Link from "next/link";
 
 export default function StudentLogin() {
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const [showPassword, setShowPassword] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState("")
-  const router = useRouter()
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [toast, setToast] = useState("");
+  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsLoading(true)
-    setError("")
+    e.preventDefault();
+    setIsLoading(true);
+    setError("");
+    setToast("");
 
-    // Simulate authentication
-    setTimeout(() => {
-      if (email && password) {
-        localStorage.setItem("userType", "student")
-        localStorage.setItem("userId", "student123")
-        router.push("/dashboard/student")
+    try {
+      const res = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        // Handle errors
+        if (res.status === 404) {
+          // Account not created
+          setToast(
+            data.message ||
+              "Your account does not exist. Contact Administrator."
+          );
+        } else if (res.status === 401) {
+          setError(data.message || "Invalid email or password");
+        } else {
+          setError(data.message || "Something went wrong");
+        }
       } else {
-        setError("Please fill in all fields")
+        // Success
+        localStorage.setItem("userType", "student");
+        localStorage.setItem("userId", data.user.id);
+        localStorage.setItem("authToken", data.token);
+        router.push("/dashboard/student");
       }
-      setIsLoading(false)
-    }, 1500)
-  }
+    } catch (err) {
+      console.error("Login error:", err);
+      setError("Server error. Please try again later.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 flex items-center justify-center p-4">
@@ -77,7 +111,10 @@ export default function StudentLogin() {
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="space-y-2">
-                <Label htmlFor="email" className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                <Label
+                  htmlFor="email"
+                  className="text-sm font-medium text-gray-700 dark:text-gray-300"
+                >
                   Email Address
                 </Label>
                 <Input
@@ -91,7 +128,10 @@ export default function StudentLogin() {
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="password" className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                <Label
+                  htmlFor="password"
+                  className="text-sm font-medium text-gray-700 dark:text-gray-300"
+                >
                   Password
                 </Label>
                 <div className="relative">
@@ -120,9 +160,19 @@ export default function StudentLogin() {
                 </div>
               </div>
 
+              {toast && (
+                <Alert className="border-yellow-200 bg-yellow-50 dark:border-yellow-800 dark:bg-yellow-950">
+                  <AlertDescription className="text-yellow-700 dark:text-yellow-400">
+                    {toast}
+                  </AlertDescription>
+                </Alert>
+              )}
+
               {error && (
                 <Alert className="border-red-200 bg-red-50 dark:border-red-800 dark:bg-red-950">
-                  <AlertDescription className="text-red-700 dark:text-red-400">{error}</AlertDescription>
+                  <AlertDescription className="text-red-700 dark:text-red-400">
+                    {error}
+                  </AlertDescription>
                 </Alert>
               )}
 
@@ -155,7 +205,9 @@ export default function StudentLogin() {
             </div>
 
             <div className="mt-6 pt-6 border-t border-gray-200 dark:border-gray-700">
-              <p className="text-center text-sm text-gray-500 dark:text-gray-400 mb-4">Or sign in as</p>
+              <p className="text-center text-sm text-gray-500 dark:text-gray-400 mb-4">
+                Or sign in as
+              </p>
               <Button
                 variant="outline"
                 onClick={() => router.push("/login/teacher")}
@@ -171,7 +223,9 @@ export default function StudentLogin() {
         {/* Demo Credentials */}
         <Card className="mt-6 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border-0 shadow-lg">
           <CardContent className="pt-6">
-            <h3 className="font-semibold text-gray-900 dark:text-gray-100 mb-3">Demo Credentials</h3>
+            <h3 className="font-semibold text-gray-900 dark:text-gray-100 mb-3">
+              Demo Credentials
+            </h3>
             <div className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
               <p>
                 <strong>Email:</strong> student@demo.com
@@ -184,5 +238,5 @@ export default function StudentLogin() {
         </Card>
       </div>
     </div>
-  )
+  );
 }
