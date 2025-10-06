@@ -127,13 +127,13 @@ export default function Navigation({ userType }: NavigationProps) {
                   ? userType === "student"
                     ? "bg-gradient-to-r from-blue-500 to-blue-600 dark:from-blue-400 dark:to-blue-500 text-white shadow-lg"
                     : "bg-gradient-to-r from-emerald-500 to-emerald-600 dark:from-emerald-400 dark:to-emerald-500 text-white shadow-lg"
-                  : "text-foreground hover:bg-muted dark:hover:bg-muted/50 hover:text-foreground"
+                  : "text-foreground hover:bg-muted dark:hover:bg-muted/50 hover:text-foreground hover:-translate-y-0.5"
               }`}
               onClick={() => setIsOpen(false)}
             >
               <Icon
-                className={`h-5 w-5 transition-transform group-hover:scale-110 ${
-                  isActive ? "text-white" : "text-muted-foreground"
+                className={`h-5 w-5 transition-all group-hover:scale-110 ${
+                  isActive ? "text-white" : "text-muted-foreground group-hover:text-foreground"
                 }`}
               />
               <span className="font-medium">{item.label}</span>
@@ -146,7 +146,7 @@ export default function Navigation({ userType }: NavigationProps) {
       {/* Footer */}
       <div className="p-4 border-t border-border space-y-2">
         <div className="flex items-center justify-between">
-          <Button variant="ghost" className="flex-1 justify-start text-foreground hover:text-foreground hover:bg-muted">
+          <Button variant="ghost" className="flex-1 justify-start text-foreground hover:text-foreground hover:bg-muted transition-colors">
             <Settings className="h-5 w-5 mr-3" />
             Settings
           </Button>
@@ -155,7 +155,7 @@ export default function Navigation({ userType }: NavigationProps) {
         <Button
           onClick={handleLogout}
           variant="ghost"
-          className="w-full justify-start text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 hover:bg-red-50 dark:hover:bg-red-950"
+          className="w-full justify-start text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 hover:bg-red-50 dark:hover:bg-red-950 transition-colors"
         >
           <LogOut className="h-5 w-5 mr-3" />
           Logout
@@ -171,11 +171,12 @@ export default function Navigation({ userType }: NavigationProps) {
         <Sheet open={isOpen} onOpenChange={setIsOpen}>
           <SheetTrigger asChild>
             <Button
-              variant="outline"
-              size="icon"
-              className="fixed top-4 left-4 z-50 bg-background/80 backdrop-blur-sm border-border shadow-lg hover:shadow-xl transition-all duration-300"
-            >
-              <Menu className="h-4 w-4" />
+               variant="outline"
+               size="icon"
+              className="fixed top-4 left-4 z-50 bg-background/80 backdrop-blur-sm border-border shadow-lg hover:shadow-xl hover:scale-110 transition-transform duration-300 transform-gpu motion-reduce:transition-none motion-reduce:hover:scale-100"
+              aria-label="Open navigation"
+              >
+             <Menu className="h-4 w-4" />
             </Button>
           </SheetTrigger>
           <SheetContent side="left" className="w-80 p-0 border-0">

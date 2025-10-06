@@ -27,23 +27,21 @@ SikshaLink is participating in GSSoC (GirlScript Summer of Code) 2025. Contribut
 
 ### Point Structure
 
-- **Level 1 (Easy)**: 10 points
+- **Level 1 (Easy)**: 3 points
   - Bug fixes
   - Documentation improvements
   - Minor UI enhancements
 
-- **Level 2 (Medium)**: 25 points
+- **Level 2 (Medium)**: 6 points
   - Implementing new UI components
   - Adding simple API endpoints
   - Basic feature implementation
 
-- **Level 3 (Hard)**: 50 points
+- **Level 3 (Hard)**: 10 points
   - Complex feature implementation
   - Database schema design and implementation
   - Authentication and authorization systems
   - Integration with external services
-
-- **Level 4 (Expert)**: 100 points
   - Major architectural improvements
   - Real-time communication features
   - Performance optimization at scale
@@ -166,7 +164,7 @@ classroom-platform/
 
 ## 💬 Communication
 
-- Join our [Discord server](https://discord.gg/example) for real-time communication
+- Join our [Discord server](https://discord.gg/aeDV37ZD) for real-time communication
 - Ask questions in the issue comments if you're unsure about something
 - Attend our weekly contributor meetings (schedule in Discord)
 

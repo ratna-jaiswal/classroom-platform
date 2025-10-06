@@ -5,6 +5,9 @@ import { loginSchema } from "@/lib/validations/auth";
 import { generateToken, cookieConfig } from "@/lib/auth";
 import { ZodError } from "zod";
 
+
+// POST /api/auth/login
+// Authenticates a user and provides JWT token via HTTP-only cookie
 export async function POST(request: NextRequest) {
   try {
     // Parse request body
@@ -101,4 +104,4 @@ export async function POST(request: NextRequest) {
       { status: 500 }
     );
   }
-}
+};
