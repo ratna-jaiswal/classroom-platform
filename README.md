@@ -21,6 +21,62 @@ SikshaLink is a next-generation learning management system that connects student
 - **Notifications**: Real-time updates on classes and assignments
 - **Mentorship**: Connect with mentors for personalized guidance
 - **Fee Management**: Track and manage fee payments
+- **Payment Processing**: Secure payment gateway with test card support
+
+## 💳 Payment System & Test Cards
+
+The platform includes a comprehensive payment system for handling student fee payments. The system supports various payment scenarios and provides test cards for development and testing purposes.
+
+### Payment Features
+- Secure payment form with validation
+- Multiple payment scenarios (success, failure, expired cards, etc.)
+- Transaction history and receipts
+- Installment-based payments
+- Real-time payment processing simulation
+
+### Test Cards for Development
+
+Use these test card numbers to simulate different payment scenarios:
+
+#### ✅ Successful Payments
+| Card Number | Card Type | Description |
+|-------------|-----------|-------------|
+| `4111 1111 1111 1111` | Visa | Payment will succeed |
+
+#### ❌ Failed Payments
+| Card Number | Card Type | Description |
+|-------------|-----------|-------------|
+| `4000 0000 0000 0002` | Visa | Card will be declined |
+| `4000 0000 0000 9995` | Visa | Insufficient funds |
+| `4000 0000 0000 0069` | Visa | Expired card |
+
+#### 🔧 Error Scenarios
+| Card Number | Card Type | Description |
+|-------------|-----------|-------------|
+| `4000 0000 0000 0119` | Visa | Network timeout simulation |
+| `4000 0000 0000 0127` | Visa | Generic processing error |
+
+### Test Card Usage Instructions
+
+1. Navigate to the **Fees** section as a student
+2. Click on **"Pay Now"** for any pending installment or use **"Make Custom Payment"**
+3. Use any of the test card numbers above
+4. Fill in the following test details:
+   - **Cardholder Name**: Any name (e.g., "Test User")
+   - **Expiry Date**: Any future date (e.g., 12/2028)
+   - **CVV**: Any 3-digit number (e.g., 123)
+5. Submit the form to see the simulated payment result
+
+### Payment Flow
+1. **Fee Overview**: View pending dues and payment history
+2. **Payment Form**: Enter card details with real-time validation
+3. **Processing**: Simulated payment processing with realistic delays
+4. **Result**: Success/failure message with transaction details
+5. **Receipt**: Downloadable payment confirmation
+
+### API Endpoints
+- `POST /api/payments/process` - Process payment transactions
+- `GET /api/payments/process` - Retrieve test card information
 
 ## 📋 Table of Contents
 
