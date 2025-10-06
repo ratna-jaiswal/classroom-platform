@@ -29,10 +29,14 @@ The platform includes a comprehensive payment system for handling student fee pa
 
 ### Payment Features
 - Secure payment form with validation
+- **Multiple Payment Methods** - Card, UPI, Net Banking, Digital Wallet
+- **Smart Payment Selection** - Visual method selector with availability status
 - Multiple payment scenarios (success, failure, expired cards, etc.)
 - Transaction history and receipts
 - Installment-based payments
 - Real-time payment processing simulation
+- **Custom Amount Input** - Users can enter any amount between ₹100-₹5,00,000
+- **Method-Specific UI** - Dynamic interface based on selected payment method
 
 ### Test Cards for Development
 
@@ -55,28 +59,42 @@ Use these test card numbers to simulate different payment scenarios:
 |-------------|-----------|-------------|
 | `4000 0000 0000 0119` | Visa | Network timeout simulation |
 | `4000 0000 0000 0127` | Visa | Generic processing error |
+| `4000 0000 0000 0101` | Visa | 3D Secure authentication required |
+
+#### 🔄 Other Payment Methods
+| Method | Test Value | Description |
+|--------|------------|-------------|
+| UPI    | `test@upi` | Successful UPI payment |
+| UPI    | `fail@upi` | Failed UPI payment |
+| Net Banking | Bank selection | Select any bank for simulation |
+| Wallet | Wallet selection | Select any wallet for simulation |
 
 ### Test Card Usage Instructions
 
 1. Navigate to the **Fees** section as a student
 2. Click on **"Pay Now"** for any pending installment or use **"Make Custom Payment"**
-3. Use any of the test card numbers above
-4. Fill in the following test details:
+3. Select "Card" as your payment method
+4. Use any of the test card numbers above
+5. Fill in the following test details:
    - **Cardholder Name**: Any name (e.g., "Test User")
    - **Expiry Date**: Any future date (e.g., 12/2028)
    - **CVV**: Any 3-digit number (e.g., 123)
-5. Submit the form to see the simulated payment result
+6. Submit the form to see the simulated payment result
+7. For successful payments, you'll be prompted to enter a mock OTP ("123456")
 
 ### Payment Flow
 1. **Fee Overview**: View pending dues and payment history
-2. **Payment Form**: Enter card details with real-time validation
-3. **Processing**: Simulated payment processing with realistic delays
-4. **Result**: Success/failure message with transaction details
-5. **Receipt**: Downloadable payment confirmation
+2. **Payment Method Selection**: Choose from Card, UPI, Net Banking, or Digital Wallet
+3. **Payment Form**: Enter method-specific details with real-time validation
+4. **Processing**: Simulated payment processing with realistic delays
+5. **Result**: Success/failure message with transaction details
+6. **Receipt**: Downloadable payment confirmation
 
 ### API Endpoints
 - `POST /api/payments/process` - Process payment transactions
 - `GET /api/payments/process` - Retrieve test card information
+- `POST /api/payments/verify` - Verify OTP for card transactions
+- `POST /api/payments/upi` - Process UPI payment requests
 
 ## 📋 Table of Contents
 
