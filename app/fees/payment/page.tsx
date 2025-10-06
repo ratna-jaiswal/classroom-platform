@@ -408,8 +408,9 @@ function PaymentPageContent() {
             <CardContent className="pt-6">
               <div className="text-center space-y-4">
                 <Alert className="border-red-200 bg-red-50 dark:border-red-800 dark:bg-red-900/20">
-                  <AlertDescription>
-                    {paymentResult.message}
+                  <AlertDescription className="flex items-center gap-2">
+                    <span className="text-red-500 font-bold text-xl">❌</span>
+                    <span>{paymentResult.message}</span>
                   </AlertDescription>
                 </Alert>
                 

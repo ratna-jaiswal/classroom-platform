@@ -200,13 +200,23 @@ export default function PaymentForm({ amount, installmentId, onPaymentComplete }
     try {
       const result = await processPayment(data)
       setPaymentResult(result)
-      onPaymentComplete?.(result)
+      
+      // Only call onPaymentComplete if it exists (prevents duplicate messages)
+      if (onPaymentComplete) {
+        onPaymentComplete(result)
+      }
     } catch (error) {
-      setPaymentResult({
+      const errorResult = {
         success: false,
         message: "An unexpected error occurred. Please try again.",
-        status: 'failed'
-      })
+        status: 'failed' as const
+      }
+      setPaymentResult(errorResult)
+      
+      // Only call onPaymentComplete if it exists (prevents duplicate messages)
+      if (onPaymentComplete) {
+        onPaymentComplete(errorResult)
+      }
     } finally {
       setIsProcessing(false)
     }
@@ -518,8 +528,8 @@ export default function PaymentForm({ amount, installmentId, onPaymentComplete }
         </Card>
       )}
 
-      {/* Payment Result */}
-      {paymentResult && (
+      {/* Payment Result - Only show when not being passed to parent component */}
+      {paymentResult && !onPaymentComplete && (
         <Alert className={getResultColor(paymentResult.status)}>
           <div className="flex items-center gap-2">
             {getResultIcon(paymentResult.status)}
