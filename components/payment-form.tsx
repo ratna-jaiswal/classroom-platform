@@ -25,14 +25,31 @@ import {
   ArrowLeft
 } from "lucide-react"
 
+// Luhn check utility
+const luhnCheck = (num: string) => {
+  let sum = 0
+  let dbl = false
+  for (let i = num.length - 1; i >= 0; i--) {
+    let d = Number(num[i])
+    if (dbl) {
+      d *= 2
+      if (d > 9) d -= 9
+    }
+    sum += d
+    dbl = !dbl
+  }
+  return sum % 10 === 0
+}
+
 // Validation schema for payment form
 const paymentSchema = z.object({
   cardNumber: z.string()
-    .min(16, "Card number must be at least 16 digits")
-    .max(19, "Card number is too long")
-    .regex(/^[\d\s]+$/, "Card number can only contain digits and spaces"),
-  expiryMonth: z.string().min(1, "Month is required"),
-  expiryYear: z.string().min(1, "Year is required"),
+    .regex(/^[\d\s]+$/, "Card number can only contain digits and spaces")
+    .transform((v) => v.replace(/\s/g, ""))
+    .refine((v) => /^\d{13,19}$/.test(v), "Card number must be 13–19 digits")
+    .refine((v) => luhnCheck(v), "Invalid card number"),
+  expiryMonth: z.string().regex(/^(0[1-9]|1[0-2])$/, "Invalid month"),
+  expiryYear: z.string().regex(/^\d{4}$/, "Invalid year"),
   cvv: z.string()
     .min(3, "CVV must be at least 3 digits")
     .max(4, "CVV cannot be more than 4 digits")
@@ -40,7 +57,7 @@ const paymentSchema = z.object({
   cardHolderName: z.string()
     .min(2, "Cardholder name must be at least 2 characters")
     .max(50, "Cardholder name is too long")
-    .regex(/^[a-zA-Z\s]+$/, "Cardholder name can only contain letters and spaces"),
+    .regex(/^[a-zA-Z\s'’-]+$/, "Name can only contain letters, spaces, hyphens, apostrophes"),
   amount: z.number().min(1, "Amount must be greater than 0"),
   installmentId: z.string().optional(),
 })
@@ -133,18 +150,8 @@ export default function PaymentForm({ amount, installmentId, onPaymentComplete }
 
   // Format card number with spaces
   const formatCardNumber = (value: string) => {
-    const v = value.replace(/\s+/g, "").replace(/[^0-9]/gi, "")
-    const matches = v.match(/\d{4,16}/g)
-    const match = matches && matches[0] || ""
-    const parts = []
-    for (let i = 0, len = match.length; i < len; i += 4) {
-      parts.push(match.substring(i, i + 4))
-    }
-    if (parts.length) {
-      return parts.join(" ")
-    } else {
-      return v
-    }
+    const cleaned = value.replace(/\D/g, "").slice(0, 19)
+    return cleaned.replace(/(\d{4})(?=\d)/g, "$1 ")
   }
 
   // Detect card type

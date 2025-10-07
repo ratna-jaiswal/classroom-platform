@@ -140,6 +140,31 @@ export async function POST(request: NextRequest) {
       }, { status: 400 })
     }
 
+        // Luhn check for card numbers
+        const luhnCheck = (num: string) => {
+          let sum = 0
+          let dbl = false
+          for (let i = num.length - 1; i >= 0; i--) {
+            let d = Number(num[i])
+            if (dbl) {
+              d *= 2
+              if (d > 9) d -= 9
+            }
+            sum += d
+            dbl = !dbl
+          }
+          return sum % 10 === 0
+        }
+
+        if (!luhnCheck(cleanCardNumber)) {
+          return NextResponse.json({
+            success: false,
+            message: 'Invalid card number (failed Luhn check)',
+            status: 'invalid_card',
+            timestamp: new Date().toISOString(),
+          }, { status: 400 })
+        }
+
     // Check if card is expired
     if (isCardExpired(body.expiryMonth, body.expiryYear)) {
       return NextResponse.json({

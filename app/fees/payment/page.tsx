@@ -99,9 +99,10 @@ function PaymentPageContent() {
   // Determine payment amount
   const getPaymentAmount = () => {
     if (installment) return installment.amount
-    if (customAmount) return parseInt(customAmount)
-    if (customPaymentAmount) return parseInt(customPaymentAmount)
-    return 1000 // Default minimum amount
+    const fromUrl = customAmount ? Number.parseInt(customAmount, 10) : NaN
+    const fromInput = customPaymentAmount ? Number.parseInt(customPaymentAmount, 10) : NaN
+    const candidate = Number.isFinite(fromUrl) ? fromUrl : Number.isFinite(fromInput) ? fromInput : NaN
+    return Number.isFinite(candidate) && candidate >= 100 && candidate <= 500000 ? candidate : 1000
   }
 
   const paymentAmount = getPaymentAmount()

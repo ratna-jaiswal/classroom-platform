@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, type ComponentType } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
@@ -17,7 +17,7 @@ export interface PaymentMethod {
   id: 'card' | 'upi' | 'netbanking' | 'wallet'
   name: string
   description: string
-  icon: React.ComponentType<{ className?: string }>
+  icon: ComponentType<{ className?: string }>
   features: string[]
   processing_time: string
   availability: 'available' | 'maintenance' | 'disabled'
