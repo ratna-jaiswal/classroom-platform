@@ -386,7 +386,8 @@ export default function PaymentForm({ amount, installmentId, onPaymentComplete }
                         setValue("cardNumber", formatted)
                       }}
                       className={`pl-10 ${errors.cardNumber ? 'border-red-500' : ''}`}
-                      maxLength={19}
+                      // Allow up to 19 digits plus spaces (max 23 characters when grouped by 4s)
+                      maxLength={23}
                     />
                     <CreditCard className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
                     {watchedCardNumber && (
