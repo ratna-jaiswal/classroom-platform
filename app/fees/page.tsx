@@ -151,9 +151,19 @@ export default function FeesPage() {
         {feeStructure.pendingAmount > 0 && (
           <Alert className="mb-6 border-red-200 dark:border-red-800 bg-red-50 dark:bg-red-900/20">
             <AlertTriangle className="h-4 w-4 text-red-600 dark:text-red-400" />
-            <AlertDescription className="text-red-800 dark:text-red-300">
-              You have a pending fee of ₹{feeStructure.pendingAmount.toLocaleString()} due by {feeStructure.nextDueDate}
-              . Please make the payment to avoid late fees.
+            <AlertDescription className="flex items-center justify-between">
+              <span className="text-red-800 dark:text-red-300">
+                You have a pending fee of ₹{feeStructure.pendingAmount.toLocaleString()} due by {feeStructure.nextDueDate}
+                . Please make the payment to avoid late fees.
+              </span>
+              <Button 
+                variant="default" 
+                size="sm"
+                onClick={() => router.push(`/fees/payment?amount=${feeStructure.pendingAmount}`)}
+                className="ml-4 bg-red-600 hover:bg-red-700 text-white"
+              >
+                Pay Now
+              </Button>
             </AlertDescription>
           </Alert>
         )}
@@ -215,7 +225,14 @@ export default function FeesPage() {
                       <Badge variant={installment.status === "Paid" ? "default" : "destructive"}>
                         {installment.status}
                       </Badge>
-                      {installment.status === "Pending" && <Button size="sm">Pay Now</Button>}
+                      {installment.status === "Pending" && (
+                        <Button 
+                          size="sm"
+                          onClick={() => router.push(`/fees/payment?installment=${installment.id}&amount=${installment.amount}`)}
+                        >
+                          Pay Now
+                        </Button>
+                      )}
                     </div>
                   </div>
                 ))}
@@ -223,6 +240,38 @@ export default function FeesPage() {
             </CardContent>
           </Card>
         </div>
+
+        {/* Quick Payment Section */}
+        <Card className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border-0 shadow-lg mb-8">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2 text-gray-900 dark:text-white">
+              <CreditCard className="h-5 w-5" />
+              Quick Payment
+            </CardTitle>
+            <CardDescription className="text-gray-600 dark:text-gray-400">
+              Make a payment for any amount or pay your pending dues
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="flex flex-col sm:flex-row gap-4">
+              {feeStructure.pendingAmount > 0 && (
+                <Button 
+                  onClick={() => router.push(`/fees/payment?amount=${feeStructure.pendingAmount}`)}
+                  className="flex-1"
+                >
+                  Pay Pending Amount (₹{feeStructure.pendingAmount.toLocaleString()})
+                </Button>
+              )}
+              <Button 
+                variant="outline"
+                onClick={() => router.push('/fees/payment')}
+                className="flex-1"
+              >
+                Make Custom Payment
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
 
         {/* Payment History */}
         <Card className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border-0 shadow-lg">
