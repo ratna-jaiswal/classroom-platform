@@ -2,6 +2,8 @@
 
 ![SikshaLink Logo](public/placeholder-logo.svg)
 
+<img src="https://www.animatedimages.org/data/media/562/animated-line-image-0184.gif" width="1920" />
+
 ## 🚀 About SikshaLink
 
 SikshaLink is a next-generation learning management system that connects students and teachers in a seamless digital environment. Our platform enables educational institutions to manage classes, assignments, attendance, resources, and more all in one place.
@@ -10,6 +12,8 @@ SikshaLink is a next-generation learning management system that connects student
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.9.2-blue)](https://www.typescriptlang.org/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-3.4.17-blue)](https://tailwindcss.com/)
 [![GSSoC 2025](https://img.shields.io/badge/GSSoC-2025-orange)](https://gssoc.girlscript.tech/)
+
+<img src="https://www.animatedimages.org/data/media/562/animated-line-image-0184.gif" width="1920" />
 
 ## 🔍 Features
 
@@ -22,6 +26,8 @@ SikshaLink is a next-generation learning management system that connects student
 - **Mentorship**: Connect with mentors for personalized guidance
 - **Fee Management**: Track and manage fee payments
 
+<img src="https://www.animatedimages.org/data/media/562/animated-line-image-0184.gif" width="1920" />
+
 ## 📋 Table of Contents
 
 - [Getting Started](#getting-started)
@@ -32,6 +38,8 @@ SikshaLink is a next-generation learning management system that connects student
 - [Frontend Development](#frontend-development)
 - [License](#license)
 - [Contact](#contact)
+
+<img src="https://www.animatedimages.org/data/media/562/animated-line-image-0184.gif" width="1920" />
 
 ## 🚀 Getting Started
 
@@ -93,6 +101,8 @@ SikshaLink is a next-generation learning management system that connects student
 
 6. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
+<img src="https://www.animatedimages.org/data/media/562/animated-line-image-0184.gif" width="1920" />
+
 ## 🏗️ Project Structure
 
 ```
@@ -110,6 +120,7 @@ classroom-platform/
 ├── styles/               # Global styles
 └── ...                   # Configuration files
 ```
+<img src="https://www.animatedimages.org/data/media/562/animated-line-image-0184.gif" width="1920" />
 
 ## 💻 Tech Stack
 
@@ -126,6 +137,8 @@ classroom-platform/
 - [JWT Authentication](https://jwt.io/) - Secure user authentication with HTTP-only cookies
 - [bcryptjs](https://www.npmjs.com/package/bcryptjs) - Password hashing
 - [Zod](https://zod.dev/) - TypeScript-first schema validation
+
+<img src="https://www.animatedimages.org/data/media/562/animated-line-image-0184.gif" width="1920" />
 
 ## � API Documentation
 
@@ -161,6 +174,8 @@ curl -X GET "http://localhost:3000/api/users/me" \
 
 For detailed API documentation, see [docs/API.md](docs/API.md).
 
+<img src="https://www.animatedimages.org/data/media/562/animated-line-image-0184.gif" width="1920" />
+
 ## �👥 Contributing
 
 SikshaLink is open for contributions as part of GSSoC 2025! We welcome developers of all skill levels. Please read our [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines.
@@ -172,6 +187,8 @@ SikshaLink is open for contributions as part of GSSoC 2025! We welcome developer
 - Adding unit tests
 - Improving accessibility
 - Bug fixes and UI improvements
+
+<img src="https://www.animatedimages.org/data/media/562/animated-line-image-0184.gif" width="1920" />
 
 ## 🛠️ Development Status
 
@@ -197,6 +214,8 @@ SikshaLink is open for contributions as part of GSSoC 2025! We welcome developer
 - Fee management system
 - Mentorship platform integration
 
+<img src="https://www.animatedimages.org/data/media/562/animated-line-image-0184.gif" width="1920" />
+
 ## 🎨 Frontend Development
 
 While our focus is on backend contributions, we also welcome frontend improvements:
@@ -207,15 +226,21 @@ While our focus is on backend contributions, we also welcome frontend improvemen
 - Responsive design improvements
 - Unit and integration tests
 
+<img src="https://www.animatedimages.org/data/media/562/animated-line-image-0184.gif" width="1920" />
+
 ## 📜 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+<img src="https://www.animatedimages.org/data/media/562/animated-line-image-0184.gif" width="1920" />
 
 ## 📞 Contact
 
 For questions or support, please open an issue or contact the maintainer:
 - Email: ratnaiiitg@gmail.com
 - LinkedIn: [Ratna Jaiswal](https://www.linkedin.com/in/ratna-jaiswal/)
+
+<img src="https://www.animatedimages.org/data/media/562/animated-line-image-0184.gif" width="1920" />
 
 ## ⭐ Support
 
@@ -227,6 +252,6 @@ If you find this project helpful or interesting:
 
 Your support motivates continued development and maintenance!
 
----
+<img src="https://www.animatedimages.org/data/media/562/animated-line-image-0184.gif" width="1920" />
 
 <p align="center">Made with ❤️ for GSSoC 2025</p>
