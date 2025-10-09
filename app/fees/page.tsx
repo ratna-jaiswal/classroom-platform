@@ -212,30 +212,31 @@ export default function FeesPage() {
                     key={installment.id}
                     className="flex items-center justify-between p-3 border border-gray-200 dark:border-gray-700 rounded-lg bg-white/50 dark:bg-gray-700/30"
                   >
-                    <div>
-                      <h4 className="font-medium text-gray-900 dark:text-white">{installment.name}</h4>
-                      <p className="text-sm text-gray-600 dark:text-gray-400">
-                        Due: {installment.dueDate} • ₹{installment.amount.toLocaleString()}
-                      </p>
-                      {installment.paidDate && (
-                        <p className="text-xs text-green-600 dark:text-green-400">Paid on: {installment.paidDate}</p>
-                      )}
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <Badge variant={installment.status === "Paid" ? "default" : "destructive"}>
-                        {installment.status}
-                      </Badge>
-                      {installment.status === "Pending" && (
-                        <Button 
-                          size="sm"
-                          onClick={() => router.push(`/fees/payment?installment=${installment.id}&amount=${installment.amount}`)}
-                        >
-                          Pay Now
-                        </Button>
-                      )}
-                    </div>
-                  </div>
-                ))}
+                    {/* allow main content to shrink and actions to wrap on small screens */}
+                    <div className="flex-1 min-w-0">
+                       <h4 className="font-medium text-gray-900 dark:text-white">{installment.name}</h4>
+                       <p className="text-sm text-gray-600 dark:text-gray-400">
+                         Due: {installment.dueDate} • ₹{installment.amount.toLocaleString()}
+                       </p>
+                       {installment.paidDate && (
+                         <p className="text-xs text-green-600 dark:text-green-400">Paid on: {installment.paidDate}</p>
+                       )}
+                     </div>
+                     <div className="flex items-center space-x-2 flex-shrink-0 flex-wrap">
+                       <Badge variant={installment.status === "Paid" ? "default" : "destructive"}>
+                         {installment.status}
+                       </Badge>
+                       {installment.status === "Pending" && (
+                         <Button 
+                           size="sm"
+                           onClick={() => router.push(`/fees/payment?installment=${installment.id}&amount=${installment.amount}`)}
+                         >
+                           Pay Now
+                         </Button>
+                       )}
+                     </div>
+                   </div>
+                 ))}
               </div>
             </CardContent>
           </Card>
@@ -286,23 +287,23 @@ export default function FeesPage() {
                   key={payment.id}
                   className="flex items-center justify-between p-4 border border-gray-200 dark:border-gray-700 rounded-lg bg-white/50 dark:bg-gray-700/30"
                 >
-                  <div>
+                  <div className="flex-1 min-w-0">
                     <h4 className="font-medium text-gray-900 dark:text-white">₹{payment.amount.toLocaleString()}</h4>
-                    <div className="flex items-center space-x-4 text-sm text-gray-600 dark:text-gray-400 mt-1">
-                      <span>{payment.date}</span>
+                    <div className="flex items-center space-x-4 text-sm text-gray-600 dark:text-gray-400 mt-1 flex-wrap">
+                      <span className="truncate">{payment.date}</span>
                       <span>•</span>
-                      <span>{payment.method}</span>
+                      <span className="truncate">{payment.method}</span>
                       <span>•</span>
-                      <span>ID: {payment.transactionId}</span>
+                      <span className="truncate">ID: {payment.transactionId}</span>
                     </div>
                   </div>
-                  <div className="flex items-center space-x-2">
+                  <div className="flex items-center space-x-2 flex-shrink-0 flex-wrap">
                     <Badge variant="default">{payment.status}</Badge>
-                    <Button variant="outline" size="sm">
+                    <Button variant="outline" size="sm" className="whitespace-nowrap">
                       <Receipt className="h-4 w-4 mr-1" />
                       Receipt
                     </Button>
-                    <Button variant="outline" size="sm">
+                    <Button variant="outline" size="sm" className="whitespace-nowrap">
                       <Download className="h-4 w-4 mr-1" />
                       Download
                     </Button>
