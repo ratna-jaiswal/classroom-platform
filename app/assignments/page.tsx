@@ -213,17 +213,17 @@ function AssignmentCard({ assignment }: { assignment: any }) {
     <Card className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border-0 shadow-lg">
       <CardHeader>
         <div className="flex items-start justify-between">
-          <div>
-            <CardTitle className="text-lg text-gray-900 dark:text-white">{assignment.title}</CardTitle>
-            <CardDescription className="mt-1 text-gray-600 dark:text-gray-400">
+          <div className="flex-1 min-w-0">
+            <CardTitle className="text-lg text-gray-900 dark:text-white truncate">{assignment.title}</CardTitle>
+            <CardDescription className="mt-1 text-gray-600 dark:text-gray-400 truncate">
               {assignment.subject} • Due: {assignment.dueDate}
             </CardDescription>
           </div>
-          <div className="flex items-center space-x-2">
-            <Badge variant={assignment.type === "Graded" ? "default" : "secondary"}>{assignment.type}</Badge>
-            <Badge variant={getStatusColor(assignment.status)}>{assignment.status}</Badge>
-          </div>
-        </div>
+          <div className="flex items-center space-x-2 flex-shrink-0 flex-wrap">
+             <Badge variant={assignment.type === "Graded" ? "default" : "secondary"}>{assignment.type}</Badge>
+             <Badge variant={getStatusColor(assignment.status)}>{assignment.status}</Badge>
+           </div>
+         </div>
       </CardHeader>
       <CardContent>
         <p className="text-gray-700 dark:text-gray-300 mb-4">{assignment.description}</p>
@@ -238,7 +238,7 @@ function AssignmentCard({ assignment }: { assignment: any }) {
           <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">Submitted on: {assignment.submittedAt}</p>
         )}
 
-        <div className="flex space-x-2">
+        <div className="flex flex-wrap gap-2">
           {(assignment.status === "Pending" || assignment.status === "Overdue") && (
             <Dialog open={isSubmissionOpen} onOpenChange={setIsSubmissionOpen}>
               <DialogTrigger asChild>
@@ -247,7 +247,7 @@ function AssignmentCard({ assignment }: { assignment: any }) {
                   Submit Assignment
                 </Button>
               </DialogTrigger>
-              <DialogContent className="max-w-2xl bg-white dark:bg-gray-800">
+              <DialogContent className="w-full max-w-full sm:max-w-2xl bg-white dark:bg-gray-800">
                 <DialogHeader>
                   <DialogTitle className="text-gray-900 dark:text-white">
                     Submit Assignment: {assignment.title}

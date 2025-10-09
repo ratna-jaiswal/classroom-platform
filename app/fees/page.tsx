@@ -212,7 +212,7 @@ export default function FeesPage() {
                     key={installment.id}
                     className="flex items-center justify-between p-3 border border-gray-200 dark:border-gray-700 rounded-lg bg-white/50 dark:bg-gray-700/30"
                   >
-                    {/* allow main content to shrink and actions to wrap on small screens */}
+                    {/* allow content to shrink and actions to wrap on mobile */}
                     <div className="flex-1 min-w-0">
                        <h4 className="font-medium text-gray-900 dark:text-white">{installment.name}</h4>
                        <p className="text-sm text-gray-600 dark:text-gray-400">
