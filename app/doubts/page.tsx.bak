@@ -1,4 +1,4 @@
-﻿"use client"
+"use client"
 
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
@@ -183,7 +183,7 @@ export default function DoubtsPage() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen overflow-x-hidden bg-gradient-to-br from-purple-50 via-white to-pink-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+      <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-pink-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
         <Navigation userType={userType as "student" | "teacher"} />
         <div className="lg:ml-80 p-4 lg:p-8 flex items-center justify-center min-h-[60vh]">
           <div className="flex items-center space-x-2">
@@ -196,7 +196,7 @@ export default function DoubtsPage() {
   }
 
   return (
-    <div className="min-h-screen overflow-x-hidden bg-gradient-to-br from-purple-50 via-white to-pink-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-pink-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
       <Navigation userType={userType as "student" | "teacher"} />
 
       <div className="lg:ml-80 p-4 lg:p-8">
@@ -391,14 +391,14 @@ export default function DoubtsPage() {
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-4 text-sm text-gray-600 dark:text-gray-400">
                       <span>By {doubt.author.name}</span>
-                      <span>â€¢</span>
+                      <span>•</span>
                       <span>{formatTimestamp(doubt.createdAt)}</span>
                       <div className="flex items-center space-x-2">
                         <Tag className="h-3 w-3" />
                         <span className="capitalize">{doubt.subject}</span>
                         {doubt.topic && (
                           <>
-                            <span>â€¢</span>
+                            <span>•</span>
                             <span>{doubt.topic}</span>
                           </>
                         )}
@@ -433,4 +433,3 @@ export default function DoubtsPage() {
     </div>
   )
 }
-

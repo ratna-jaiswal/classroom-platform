@@ -1,4 +1,4 @@
-﻿"use client"
+"use client"
 
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
@@ -57,7 +57,7 @@ export default function TeacherDashboard() {
   ]
 
   return (
-    <div className="min-h-screen overflow-x-hidden bg-gradient-to-br from-emerald-50 via-white to-teal-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+    <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-white to-teal-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
       <Navigation userType="teacher" />
 
       {/* Main Content */}
@@ -69,7 +69,7 @@ export default function TeacherDashboard() {
             <div className="relative z-10">
               <div className="flex items-center justify-between">
                 <div>
-                  <h1 className="text-3xl font-bold mb-2">Good morning, Prof. Smith! ðŸ‘¨â€ðŸ«</h1>
+                  <h1 className="text-3xl font-bold mb-2">Good morning, Prof. Smith! 👨‍🏫</h1>
                   <p className="text-emerald-100 dark:text-emerald-200 text-lg">Ready to inspire minds today?</p>
                 </div>
                 <div className="hidden md:block">
@@ -180,7 +180,7 @@ export default function TeacherDashboard() {
                         <div>
                           <h4 className="font-semibold text-gray-900 dark:text-white">{class_.subject}</h4>
                           <p className="text-sm text-gray-600 dark:text-gray-400">
-                            {class_.students} students â€¢ {class_.room}
+                            {class_.students} students • {class_.room}
                           </p>
                         </div>
                       </div>
@@ -270,7 +270,7 @@ export default function TeacherDashboard() {
                       <div className="flex-1">
                         <h4 className="font-semibold text-gray-900 dark:text-white text-sm">{activity.action}</h4>
                         <p className="text-xs text-gray-600 dark:text-gray-400">
-                          {activity.subject} â€¢ {activity.count} items
+                          {activity.subject} • {activity.count} items
                         </p>
                         <p className="text-xs text-gray-500 dark:text-gray-500">{activity.time}</p>
                       </div>

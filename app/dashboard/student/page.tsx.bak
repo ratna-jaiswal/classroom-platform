@@ -1,4 +1,4 @@
-﻿"use client"
+"use client"
 
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
@@ -56,7 +56,7 @@ export default function StudentDashboard() {
   ]
 
   return (
-    <div className="min-h-screen overflow-x-hidden bg-gradient-to-br from-blue-50 via-white to-indigo-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
       <Navigation userType="student" />
 
       {/* Main Content */}
@@ -68,7 +68,7 @@ export default function StudentDashboard() {
             <div className="relative z-10">
               <div className="flex items-center justify-between">
                 <div>
-                  <h1 className="text-3xl font-bold mb-2">Welcome back, John! ðŸ‘‹</h1>
+                  <h1 className="text-3xl font-bold mb-2">Welcome back, John! 👋</h1>
                   <p className="text-blue-100 dark:text-blue-200 text-lg">Ready to continue your learning journey?</p>
                 </div>
                 <div className="hidden md:block">
@@ -162,7 +162,7 @@ export default function StudentDashboard() {
                         <div>
                           <h4 className="font-semibold text-gray-900 dark:text-white">{class_.subject}</h4>
                           <p className="text-sm text-gray-600 dark:text-gray-400">
-                            {class_.teacher} â€¢ {class_.room}
+                            {class_.teacher} • {class_.room}
                           </p>
                         </div>
                       </div>

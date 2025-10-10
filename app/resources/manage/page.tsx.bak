@@ -1,4 +1,4 @@
-﻿"use client"
+"use client"
 
 import { useState } from "react"
 import Navigation from "@/components/navigation"
@@ -99,7 +99,7 @@ export default function ResourcesManagePage() {
   }
 
   return (
-    <div className="min-h-screen overflow-x-hidden bg-gradient-to-b from-gray-50 to-gray-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
       <Navigation userType="teacher" />
 
       {/* Main content - Added pl-16 for small screens to prevent overlap with hamburger menu */}
@@ -290,7 +290,7 @@ export default function ResourcesManagePage() {
                               </div>
                               <div className="flex items-center mt-2 text-sm text-gray-500 dark:text-gray-400">
                                 <span>Uploaded on {resource.uploadDate}</span>
-                                <span className="mx-2">â€¢</span>
+                                <span className="mx-2">•</span>
                                 <span>{resource.downloads} downloads</span>
                               </div>
                             </div>
@@ -354,7 +354,7 @@ export default function ResourcesManagePage() {
                                 </div>
                                 <div className="flex items-center mt-2 text-sm text-gray-500 dark:text-gray-400">
                                   <span>Uploaded on {resource.uploadDate}</span>
-                                  <span className="mx-2">â€¢</span>
+                                  <span className="mx-2">•</span>
                                   <span>{resource.downloads} downloads</span>
                                 </div>
                               </div>
@@ -418,7 +418,7 @@ export default function ResourcesManagePage() {
                                 </div>
                                 <div className="flex items-center mt-2 text-sm text-gray-500 dark:text-gray-400">
                                   <span>Uploaded on {resource.uploadDate}</span>
-                                  <span className="mx-2">â€¢</span>
+                                  <span className="mx-2">•</span>
                                   <span>{resource.downloads} downloads</span>
                                 </div>
                               </div>
@@ -482,7 +482,7 @@ export default function ResourcesManagePage() {
                                 </div>
                                 <div className="flex items-center mt-2 text-sm text-gray-500 dark:text-gray-400">
                                   <span>Uploaded on {resource.uploadDate}</span>
-                                  <span className="mx-2">â€¢</span>
+                                  <span className="mx-2">•</span>
                                   <span>{resource.downloads} downloads</span>
                                 </div>
                               </div>
@@ -618,4 +618,3 @@ export default function ResourcesManagePage() {
     </div>
   )
 }
-

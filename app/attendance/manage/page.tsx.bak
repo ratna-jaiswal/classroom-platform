@@ -1,4 +1,4 @@
-﻿"use client"
+"use client"
 
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
@@ -116,7 +116,7 @@ export default function ManageAttendancePage() {
   const attendancePercentage = (presentCount / students.length) * 100
 
   return (
-    <div className="min-h-screen overflow-x-hidden bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
       <Navigation userType="teacher" />
 
       <div className="lg:ml-80 p-4 lg:p-8">
@@ -465,4 +465,3 @@ export default function ManageAttendancePage() {
     </div>
   )
 }
-

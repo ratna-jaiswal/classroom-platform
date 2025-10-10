@@ -1,4 +1,4 @@
-﻿"use client"
+"use client"
 
 import { useEffect, useState, Suspense } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
@@ -110,7 +110,7 @@ function PaymentPageContent() {
   // Validate custom amount
   const isValidCustomAmount = () => {
     const amount = parseInt(customPaymentAmount)
-    return amount >= 100 && amount <= 500000 // Min â‚¹100, Max â‚¹5,00,000
+    return amount >= 100 && amount <= 500000 // Min ₹100, Max ₹5,00,000
   }
 
   const handlePaymentComplete = (result: PaymentResult) => {
@@ -135,7 +135,7 @@ function PaymentPageContent() {
 
   if (paymentCompleted && paymentResult?.success) {
     return (
-      <div className="min-h-screen overflow-x-hidden bg-gradient-to-br from-green-50 via-white to-emerald-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+      <div className="min-h-screen bg-gradient-to-br from-green-50 via-white to-emerald-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
         <Navigation userType="student" />
         
         <div className="lg:ml-80 p-4 lg:p-8">
@@ -159,7 +159,7 @@ function PaymentPageContent() {
                   <div className="flex justify-between items-center">
                     <span className="text-gray-600 dark:text-gray-400">Amount Paid:</span>
                     <span className="font-semibold text-gray-900 dark:text-white">
-                      â‚¹{paymentAmount.toLocaleString()}
+                      ₹{paymentAmount.toLocaleString()}
                     </span>
                   </div>
                   
@@ -242,7 +242,7 @@ function PaymentPageContent() {
   }
 
   return (
-    <div className="min-h-screen overflow-x-hidden bg-gradient-to-br from-green-50 via-white to-emerald-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+    <div className="min-h-screen bg-gradient-to-br from-green-50 via-white to-emerald-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
       <Navigation userType="student" />
       
       <div className="lg:ml-80 p-4 lg:p-8">
@@ -288,7 +288,7 @@ function PaymentPageContent() {
                 <div>
                   <p className="text-sm text-gray-600 dark:text-gray-400">Amount</p>
                   <p className="font-semibold text-gray-900 dark:text-white">
-                    â‚¹{installment.amount.toLocaleString()}
+                    ₹{installment.amount.toLocaleString()}
                   </p>
                 </div>
               </div>
@@ -305,14 +305,14 @@ function PaymentPageContent() {
                 Enter Payment Amount
               </CardTitle>
               <CardDescription className="text-gray-600 dark:text-gray-400">
-                Enter the amount you want to pay (â‚¹100 - â‚¹5,00,000)
+                Enter the amount you want to pay (₹100 - ₹5,00,000)
               </CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
                 <div className="space-y-2">
                   <Label htmlFor="customAmount" className="text-gray-700 dark:text-gray-300">
-                    Payment Amount (â‚¹)
+                    Payment Amount (₹)
                   </Label>
                   <div className="relative">
                     <Input
@@ -336,7 +336,7 @@ function PaymentPageContent() {
                   
                   {customPaymentAmount && !isValidCustomAmount() && (
                     <p className="text-sm text-red-500">
-                      Amount must be between â‚¹100 and â‚¹5,00,000
+                      Amount must be between ₹100 and ₹5,00,000
                     </p>
                   )}
                   
@@ -346,7 +346,7 @@ function PaymentPageContent() {
                         Amount to Pay:
                       </span>
                       <span className="text-lg font-bold text-green-900 dark:text-green-100">
-                        â‚¹{parseInt(customPaymentAmount).toLocaleString()}
+                        ₹{parseInt(customPaymentAmount).toLocaleString()}
                       </span>
                     </div>
                   )}
@@ -367,7 +367,7 @@ function PaymentPageContent() {
                         onClick={() => setCustomPaymentAmount(amount.toString())}
                         className="hover:bg-green-50 hover:border-green-300 dark:hover:bg-green-900/20"
                       >
-                        â‚¹{amount.toLocaleString()}
+                        ₹{amount.toLocaleString()}
                       </Button>
                     ))}
                   </div>
@@ -396,7 +396,7 @@ function PaymentPageContent() {
                   Enter Payment Amount
                 </h3>
                 <p className="text-gray-600 dark:text-gray-400">
-                  Please enter a valid amount between â‚¹100 and â‚¹5,00,000 to proceed with the payment.
+                  Please enter a valid amount between ₹100 and ₹5,00,000 to proceed with the payment.
                 </p>
               </div>
             </CardContent>
@@ -410,7 +410,7 @@ function PaymentPageContent() {
               <div className="text-center space-y-4">
                 <Alert className="border-red-200 bg-red-50 dark:border-red-800 dark:bg-red-900/20">
                   <AlertDescription className="flex items-center gap-2">
-                    <span className="text-red-500 font-bold text-xl">âŒ</span>
+                    <span className="text-red-500 font-bold text-xl">❌</span>
                     <span>{paymentResult.message}</span>
                   </AlertDescription>
                 </Alert>

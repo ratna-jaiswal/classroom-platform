@@ -1,4 +1,4 @@
-﻿"use client"
+"use client"
 
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
@@ -98,7 +98,7 @@ export default function AssignmentsPage() {
   const submittedAssignments = assignments.filter((a) => a.status === "Submitted")
 
   return (
-    <div className="min-h-screen overflow-x-hidden bg-gradient-to-br from-blue-50 via-white to-indigo-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
       <Navigation userType="student" />
 
       <div className="lg:ml-80 p-4 lg:p-8">
@@ -216,7 +216,7 @@ function AssignmentCard({ assignment }: { assignment: any }) {
           <div className="flex-1 min-w-0">
             <CardTitle className="text-lg text-gray-900 dark:text-white truncate">{assignment.title}</CardTitle>
             <CardDescription className="mt-1 text-gray-600 dark:text-gray-400 truncate">
-              {assignment.subject} â€¢ Due: {assignment.dueDate}
+              {assignment.subject} • Due: {assignment.dueDate}
             </CardDescription>
           </div>
 
@@ -304,4 +304,3 @@ function AssignmentCard({ assignment }: { assignment: any }) {
     </Card>
   )
 }
-

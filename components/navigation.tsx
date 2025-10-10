@@ -192,3 +192,173 @@ export default function Navigation({ userType }: NavigationProps) {
     </>
   )
 }
+
+export function StudentLogin() {
+  const router = useRouter()
+
+  return (
+    <div className="min-h-screen overflow-x-hidden bg-gradient-to-br from-blue-50 via-white to-indigo-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 flex items-center justify-center p-4">
+      {/* Animated Background Elements (responsive offsets to avoid overflow on small screens) */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-20 left-4 sm:left-20 w-72 h-72 bg-blue-300 dark:bg-blue-600 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-xl opacity-70 animate-blob"></div>
+        <div className="absolute top-40 right-4 sm:right-20 w-72 h-72 bg-indigo-300 dark:bg-indigo-600 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
+        <div className="absolute -bottom-8 left-4 sm:left-40 w-72 h-72 bg-purple-300 dark:bg-purple-600 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-xl opacity-70 animate-blob animation-delay-4000"></div>
+      </div>
+     <div className="w-full max-w-md relative z-10">
+       {/* Header */}
+       <div className="flex items-center justify-between mb-6">
+         <Button
+           variant="ghost"
+           onClick={() => router.push("/")}
+           className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 p-2"
+         >
+           <ArrowLeft className="h-4 w-4 mr-2" />
+           Back to Home
+         </Button>
+         <ThemeToggle />
+       </div>
+
+       {/* Title */}
+       <div className="text-center mb-8">
+         <h1 className="text-4xl font-extrabold leading-tight text-foreground">
+           Welcome to SikshaLink
+         </h1>
+         <p className="text-lg text-muted-foreground">
+           {`The one-stop solution for ${userType === "student" ? "students" : "teachers"} to manage their academic life.`}
+         </p>
+       </div>
+
+       {/* Login Form */}
+       <div className="bg-muted/50 dark:bg-muted/30 p-6 rounded-xl shadow-md">
+         <div className="space-y-4">
+           <Button
+             variant="outline"
+             className="w-full h-12 border-2 hover:border-blue-400 hover:text-blue-600 dark:hover:border-blue-300 dark:hover:text-blue-300"
+             onClick={() => router.push("/login/student")}
+           >
+             <BookOpen className="h-4 w-4 mr-2" />
+             Student Login
+           </Button>
+           <Button
+             variant="outline"
+             className="w-full h-12 border-2 hover:border-emerald-300 hover:text-emerald-600 dark:hover:border-emerald-400 dark:hover:text-emerald-400"
+             onClick={() => router.push("/login/teacher")}
+           >
+             <GraduationCap className="h-4 w-4 mr-2" />
+             Teacher Login
+           </Button>
+         </div>
+       </div>
+
+       {/* Footer */}
+       <div className="mt-6 pt-6 border-t border-gray-200 dark:border-gray-700">
+         <p className="text-center text-sm text-gray-500 dark:text-gray-400 mb-4">
+           Or sign in as
+         </p>
+         <div className="flex flex-col sm:flex-row gap-2">
+           <Button
+             variant="outline"
+             onClick={() => router.push("/login/teacher")}
+             className="w-full sm:w-1/2 h-12 border-2 hover:border-emerald-300 hover:text-emerald-600 dark:hover:border-emerald-400 dark:hover:text-emerald-400"
+           >
+             <GraduationCap className="h-4 w-4 mr-2" />
+             Teacher
+           </Button>
+           <Button
+             variant="ghost"
+             onClick={() => router.push("/")}
+             className="w-full sm:w-1/2 h-12"
+           >
+             Back
+           </Button>
+         </div>
+       </div>
+     </div>
+  </div>
+  )
+}
+
+export function TeacherLogin() {
+  const router = useRouter()
+
+  return (
+    <div className="min-h-screen overflow-x-hidden bg-gradient-to-br from-emerald-50 via-white to-teal-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 flex items-center justify-center p-4">
+      {/* Animated Background Elements (responsive offsets to avoid overflow on small screens) */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-20 left-4 sm:left-20 w-72 h-72 bg-emerald-300 dark:bg-emerald-600 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-xl opacity-70 animate-blob"></div>
+        <div className="absolute top-40 right-4 sm:right-20 w-72 h-72 bg-teal-300 dark:bg-teal-600 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
+        <div className="absolute -bottom-8 left-4 sm:left-40 w-72 h-72 bg-green-300 dark:bg-green-600 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-xl opacity-70 animate-blob animation-delay-4000"></div>
+      </div>
+     <div className="w-full max-w-md relative z-10">
+       {/* Header */}
+       <div className="flex items-center justify-between mb-6">
+         <Button
+           variant="ghost"
+           onClick={() => router.push("/")}
+           className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 p-2"
+         >
+           <ArrowLeft className="h-4 w-4 mr-2" />
+           Back to Home
+         </Button>
+         <ThemeToggle />
+       </div>
+
+       {/* Title */}
+       <div className="text-center mb-8">
+         <h1 className="text-4xl font-extrabold leading-tight text-foreground">
+           Welcome to SikshaLink
+         </h1>
+         <p className="text-lg text-muted-foreground">
+           {`The one-stop solution for ${userType === "student" ? "students" : "teachers"} to manage their academic life.`}
+         </p>
+       </div>
+
+       {/* Login Form */}
+       <div className="bg-muted/50 dark:bg-muted/30 p-6 rounded-xl shadow-md">
+         <div className="space-y-4">
+           <Button
+             variant="outline"
+             className="w-full h-12 border-2 hover:border-blue-400 hover:text-blue-600 dark:hover:border-blue-300 dark:hover:text-blue-300"
+             onClick={() => router.push("/login/student")}
+           >
+             <BookOpen className="h-4 w-4 mr-2" />
+             Student Login
+           </Button>
+           <Button
+             variant="outline"
+             className="w-full h-12 border-2 hover:border-emerald-300 hover:text-emerald-600 dark:hover:border-emerald-400 dark:hover:text-emerald-400"
+             onClick={() => router.push("/login/teacher")}
+           >
+             <GraduationCap className="h-4 w-4 mr-2" />
+             Teacher Login
+           </Button>
+         </div>
+       </div>
+
+       {/* Footer */}
+       <div className="mt-6 pt-6 border-t border-gray-200 dark:border-gray-700">
+         <p className="text-center text-sm text-gray-500 dark:text-gray-400 mb-4">
+           Or sign in as
+         </p>
+         <div className="flex flex-col sm:flex-row gap-2">
+           <Button
+             variant="outline"
+             onClick={() => router.push("/login/student")}
+             className="w-full sm:w-1/2 h-12 border-2 hover:border-blue-300 hover:text-blue-600 dark:hover:border-blue-400 dark:hover:text-blue-400"
+           >
+             <BookOpen className="h-4 w-4 mr-2" />
+             Student
+           </Button>
+           <Button
+             variant="ghost"
+             onClick={() => router.push("/")}
+             className="w-full sm:w-1/2 h-12"
+           >
+             Back
+           </Button>
+         </div>
+       </div>
+     </div>
+  </div>
+  )
+}

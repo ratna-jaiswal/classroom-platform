@@ -1,4 +1,4 @@
-﻿"use client"
+"use client"
 
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
@@ -49,7 +49,7 @@ export default function NotificationsPage() {
       id: 3,
       type: "fee",
       title: "Fee Payment Reminder",
-      message: "Your next installment of â‚¹40,000 is due on March 15, 2024.",
+      message: "Your next installment of ₹40,000 is due on March 15, 2024.",
       timestamp: "1 day ago",
       read: true,
       priority: "high",
@@ -112,7 +112,7 @@ export default function NotificationsPage() {
   }
 
   return (
-    <div className="min-h-screen overflow-x-hidden bg-gradient-to-br from-yellow-50 via-white to-orange-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+    <div className="min-h-screen bg-gradient-to-br from-yellow-50 via-white to-orange-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
       <Navigation userType={userType as "student" | "teacher"} />
 
       <div className="lg:ml-80 p-4 lg:p-8">
@@ -285,4 +285,3 @@ function NotificationCard({ notification }: { notification: any }) {
     </Card>
   )
 }
-
