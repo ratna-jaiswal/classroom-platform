@@ -1,4 +1,4 @@
-﻿"use client"
+"use client"
 
 import { useState } from "react"
 import Navigation from "@/components/navigation"
@@ -60,7 +60,7 @@ export default function ScheduleManagePage() {
   ]
 
   return (
-    <div className="min-h-screen overflow-x-hidden bg-gradient-to-b from-gray-50 to-gray-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
       <Navigation userType="teacher" />
 
       {/* Main content - use small left padding on mobile, large on lg */}
@@ -276,4 +276,3 @@ export default function ScheduleManagePage() {
     </div>
   )
 }
-

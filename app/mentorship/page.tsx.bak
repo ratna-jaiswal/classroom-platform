@@ -1,4 +1,4 @@
-﻿"use client"
+"use client"
 
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
@@ -133,7 +133,7 @@ export default function MentorshipPage() {
   }
 
   return (
-    <div className="min-h-screen overflow-x-hidden bg-gradient-to-br from-emerald-50 via-white to-teal-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+    <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-white to-teal-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
       <Navigation userType={userType as "student" | "teacher"} />
 
       <div className="lg:ml-80 p-4 lg:p-8">
@@ -323,7 +323,7 @@ export default function MentorshipPage() {
                     <div>
                       <h4 className="font-medium text-gray-900 dark:text-white">{session.topic}</h4>
                       <p className="text-sm text-gray-600 dark:text-gray-400">
-                        with {session.teacher} â€¢ {session.subject}
+                        with {session.teacher} • {session.subject}
                       </p>
                       <div className="flex items-center space-x-4 mt-2 text-sm text-gray-500 dark:text-gray-400">
                         <div className="flex items-center space-x-1">
@@ -372,7 +372,7 @@ export default function MentorshipPage() {
                       <div className="flex-1 min-w-0">
                         <h4 className="font-medium text-gray-900 dark:text-white">{session.topic}</h4>
                         <p className="text-sm text-gray-600 dark:text-gray-400">
-                          with {session.teacher} â€¢ {session.subject}
+                          with {session.teacher} • {session.subject}
                         </p>
                         <div className="flex items-center space-x-4 mt-1 text-sm text-gray-500 dark:text-gray-400">
                           <span>{session.date}</span>
@@ -458,4 +458,3 @@ export default function MentorshipPage() {
     </div>
   )
 }
-

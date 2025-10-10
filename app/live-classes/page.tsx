@@ -95,7 +95,7 @@ export default function LiveClassesPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-red-50 via-white to-pink-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+    <div className="min-h-screen overflow-x-hidden bg-gradient-to-br from-red-50 via-white to-pink-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
       <Navigation userType={userType as "student" | "teacher"} />
 
       <div className="lg:ml-80 p-4 lg:p-8">
@@ -175,13 +175,15 @@ export default function LiveClassesPage() {
         {liveNow.length > 0 && (
           <Card className="mb-8 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border-0 shadow-lg">
             <CardHeader>
-              <CardTitle className="flex items-center space-x-2 text-gray-900 dark:text-white">
-                <div className="w-3 h-3 bg-red-500 rounded-full animate-pulse"></div>
-                <span>Live Now</span>
-              </CardTitle>
-              <CardDescription className="text-gray-600 dark:text-gray-400">
-                Classes currently in session
-              </CardDescription>
+              <div className="flex items-center space-x-1 w-full">
+                <CardTitle className="flex items-center space-x-2 text-gray-900 dark:text-white min-w-0 truncate">
+                  <div className="w-3 h-3 bg-red-500 rounded-full animate-pulse"></div>
+                  <span>Live Now</span>
+                </CardTitle>
+                <CardDescription className="text-gray-600 dark:text-gray-400 truncate">
+                  Classes currently in session
+                </CardDescription>
+              </div>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
@@ -261,7 +263,7 @@ function LiveClassCard({ classItem, userType }: { classItem: any; userType: stri
     >
       <CardContent className="p-6">
         <div className="flex items-start justify-between">
-          <div className="flex-1">
+          <div className="flex-1 min-w-0">
             <div className="flex items-center space-x-2 mb-2">
               <h4 className="font-medium text-lg text-gray-900 dark:text-white">{classItem.title}</h4>
               <Badge variant={getStatusColor(classItem.status)}>{classItem.status}</Badge>
@@ -298,7 +300,7 @@ function LiveClassCard({ classItem, userType }: { classItem: any; userType: stri
               </div>
             </div>
           </div>
-          <div className="flex flex-col space-y-2">
+          <div className="flex flex-col sm:flex-row sm:space-x-2 space-y-2 sm:space-y-0 flex-shrink-0">
             {classItem.status === "Live" && (
               <Button className="bg-red-600 hover:bg-red-700">
                 <Video className="h-4 w-4 mr-2" />

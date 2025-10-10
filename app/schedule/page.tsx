@@ -127,11 +127,11 @@ export default function SchedulePage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+    <div className="min-h-screen overflow-x-hidden bg-gradient-to-br from-indigo-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
       <Navigation userType={userType as "student" | "teacher"} />
 
       <div className="lg:ml-80 p-4 lg:p-8">
-        <div className="mb-8 flex items-center justify-between">
+        <div className="mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between">
           <div>
             <h1 className="text-3xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent mb-2">
               Schedule
@@ -161,7 +161,7 @@ export default function SchedulePage() {
                   key={classItem.id}
                   className="flex items-center justify-between p-4 border border-gray-200 dark:border-gray-700 rounded-lg bg-white/50 dark:bg-gray-700/30"
                 >
-                  <div className="flex items-center space-x-4">
+                  <div className="flex items-center space-x-4 flex-1 min-w-0">
                     <div
                       className={`w-3 h-3 rounded-full ${
                         classItem.status === "Completed"
@@ -171,22 +171,22 @@ export default function SchedulePage() {
                             : "bg-gray-400"
                       }`}
                     ></div>
-                    <div>
-                      <h4 className="font-medium text-gray-900 dark:text-white">{classItem.subject}</h4>
-                      <div className="flex items-center space-x-4 text-sm text-gray-600 dark:text-gray-400">
-                        <div className="flex items-center space-x-1">
+                    <div className="min-w-0">
+                      <h4 className="font-medium text-gray-900 dark:text-white truncate">{classItem.subject}</h4>
+                      <div className="flex flex-wrap gap-2 items-center text-sm text-gray-600 dark:text-gray-400">
+                        <div className="flex items-center space-x-1 truncate">
                           <Clock className="h-4 w-4" />
-                          <span>{classItem.time}</span>
+                          <span className="truncate">{classItem.time}</span>
                         </div>
-                        <div className="flex items-center space-x-1">
+                        <div className="flex items-center space-x-1 truncate">
                           <MapPin className="h-4 w-4" />
-                          <span>{classItem.room}</span>
+                          <span className="truncate">{classItem.room}</span>
                         </div>
-                        <span>with {classItem.teacher}</span>
+                        <span className="truncate">with {classItem.teacher}</span>
                       </div>
                     </div>
                   </div>
-                  <div className="flex items-center space-x-2">
+                  <div className="flex items-center space-x-2 flex-shrink-0 flex-wrap">
                     <Badge variant="outline">{classItem.type}</Badge>
                     <Badge variant={getStatusColor(classItem.status)}>{classItem.status}</Badge>
                   </div>
@@ -211,13 +211,13 @@ export default function SchedulePage() {
                   key={day.day}
                   className="border border-gray-200 dark:border-gray-700 rounded-lg p-4 bg-white/50 dark:bg-gray-700/30"
                 >
-                  <h4 className="font-medium mb-3 text-center text-gray-900 dark:text-white">{day.day}</h4>
+                  <h4 className="font-medium mb-3 text-center text-gray-900 dark:text-white truncate">{day.day}</h4>
                   <div className="space-y-2">
                     {day.classes.map((classItem, index) => (
                       <div key={index} className="text-sm p-2 bg-gray-50 dark:bg-gray-600/50 rounded">
-                        <div className="font-medium text-gray-900 dark:text-white">{classItem.subject}</div>
-                        <div className="text-gray-600 dark:text-gray-400">{classItem.time}</div>
-                        <div className="text-gray-500 dark:text-gray-400">Room {classItem.room}</div>
+                        <div className="font-medium text-gray-900 dark:text-white truncate">{classItem.subject}</div>
+                        <div className="text-gray-600 dark:text-gray-400 truncate">{classItem.time}</div>
+                        <div className="text-gray-500 dark:text-gray-400 truncate">Room {classItem.room}</div>
                       </div>
                     ))}
                   </div>
@@ -243,11 +243,13 @@ export default function SchedulePage() {
                     key={index}
                     className="flex items-center justify-between p-3 border border-gray-200 dark:border-gray-700 rounded-lg bg-white/50 dark:bg-gray-700/30"
                   >
-                    <div>
-                      <h4 className="font-medium text-gray-900 dark:text-white">{holiday.name}</h4>
-                      <p className="text-sm text-gray-600 dark:text-gray-400">{holiday.date}</p>
+                    <div className="flex-1 min-w-0">
+                      <h4 className="font-medium text-gray-900 dark:text-white truncate">{holiday.name}</h4>
+                      <p className="text-sm text-gray-600 dark:text-gray-400 truncate">{holiday.date}</p>
                     </div>
-                    <Badge variant="outline">{holiday.type}</Badge>
+                    <div className="flex-shrink-0">
+                      <Badge variant="outline">{holiday.type}</Badge>
+                    </div>
                   </div>
                 ))}
               </div>
@@ -268,8 +270,8 @@ export default function SchedulePage() {
                     className="p-3 border border-gray-200 dark:border-gray-700 rounded-lg bg-white/50 dark:bg-gray-700/30"
                   >
                     <div className="flex items-center justify-between mb-2">
-                      <h4 className="font-medium text-gray-900 dark:text-white">{exam.subject}</h4>
-                      <Badge variant="destructive">{exam.type}</Badge>
+                      <h4 className="font-medium text-gray-900 dark:text-white truncate">{exam.subject}</h4>
+                      <div className="flex-shrink-0"><Badge variant="destructive">{exam.type}</Badge></div>
                     </div>
                     <div className="flex items-center space-x-4 text-sm text-gray-600 dark:text-gray-400">
                       <div className="flex items-center space-x-1">

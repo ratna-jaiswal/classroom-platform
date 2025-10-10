@@ -1,4 +1,4 @@
-﻿"use client"
+"use client"
 
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
@@ -98,7 +98,7 @@ export default function ManageAssignmentsPage() {
   const averageSubmissionRate = (totalSubmissions / assignments.reduce((sum, a) => sum + a.totalStudents, 0)) * 100
 
   return (
-    <div className="min-h-screen overflow-x-hidden bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
       <Navigation userType="teacher" />
 
       <div className="lg:ml-80 p-4 lg:p-8">
@@ -395,7 +395,7 @@ export default function ManageAssignmentsPage() {
                           <div>
                             <h4 className="font-semibold text-gray-900 dark:text-white">{assignment.title}</h4>
                             <p className="text-sm text-gray-600 dark:text-gray-400">
-                              {assignment.class} â€¢ Due: {assignment.dueDate}
+                              {assignment.class} • Due: {assignment.dueDate}
                             </p>
                           </div>
                           <div className="text-center">
@@ -433,7 +433,7 @@ export default function ManageAssignmentsPage() {
                           <div>
                             <h4 className="font-semibold text-gray-900 dark:text-white">{assignment.title}</h4>
                             <p className="text-sm text-gray-600 dark:text-gray-400">
-                              {assignment.class} â€¢ Completed: {assignment.dueDate}
+                              {assignment.class} • Completed: {assignment.dueDate}
                             </p>
                           </div>
                           <div className="text-center">
@@ -507,4 +507,3 @@ export default function ManageAssignmentsPage() {
     </div>
   )
 }
-

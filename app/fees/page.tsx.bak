@@ -1,4 +1,4 @@
-﻿"use client"
+"use client"
 
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
@@ -9,14 +9,6 @@ import { Button } from "@/components/ui/button"
 import { Progress } from "@/components/ui/progress"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { DollarSign, Calendar, AlertTriangle, CreditCard, Download, Receipt } from "lucide-react"
-
-function formatINR(amount: number) {
-  return new Intl.NumberFormat("en-IN", {
-    style: "currency",
-    currency: "INR",
-    maximumFractionDigits: 0,
-  }).format(amount)
-}
 
 export default function FeesPage() {
   const router = useRouter()
@@ -93,12 +85,12 @@ export default function FeesPage() {
   const paymentPercentage = (feeStructure.paidAmount / feeStructure.totalAnnualFee) * 100
 
   function handleDownload(transactionId: string) {
-    // stub â€” replace with actual download logic
+    // stub — replace with actual download logic
     window.open(`/api/fees/receipt/${transactionId}`, "_blank")
   }
 
   return (
-    <div className="min-h-screen overflow-x-hidden bg-gradient-to-br from-green-50 via-white to-emerald-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+    <div className="min-h-screen bg-gradient-to-br from-green-50 via-white to-emerald-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
       <Navigation userType="student" />
 
       <div className="lg:ml-80 p-4 lg:p-8">
@@ -118,7 +110,7 @@ export default function FeesPage() {
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
-                {formatINR(feeStructure.totalAnnualFee)}
+                ₹{feeStructure.totalAnnualFee.toLocaleString()}
               </div>
             </CardContent>
           </Card>
@@ -130,7 +122,7 @@ export default function FeesPage() {
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold text-green-600 dark:text-green-400">
-                {formatINR(feeStructure.paidAmount)}
+                ₹{feeStructure.paidAmount.toLocaleString()}
               </div>
               <Progress value={paymentPercentage} className="mt-2" />
               <p className="text-xs text-muted-foreground mt-1">{paymentPercentage.toFixed(1)}% completed</p>
@@ -144,7 +136,7 @@ export default function FeesPage() {
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold text-red-600 dark:text-red-400">
-                {formatINR(feeStructure.pendingAmount)}
+                ₹{feeStructure.pendingAmount.toLocaleString()}
               </div>
             </CardContent>
           </Card>
@@ -166,7 +158,7 @@ export default function FeesPage() {
             <AlertTriangle className="h-4 w-4 text-red-600 dark:text-red-400" />
             <AlertDescription className="flex items-center justify-between">
               <span className="text-red-800 dark:text-red-300">
-                You have a pending fee of {formatINR(feeStructure.pendingAmount)} due by {feeStructure.nextDueDate}
+                You have a pending fee of ₹{feeStructure.pendingAmount.toLocaleString()} due by {feeStructure.nextDueDate}
                 . Please make the payment to avoid late fees.
               </span>
               <Button 
@@ -195,14 +187,14 @@ export default function FeesPage() {
                 {feeBreakdown.map((item, index) => (
                   <div key={index} className="flex items-center justify-between">
                     <span className="text-sm font-medium text-gray-700 dark:text-gray-300">{item.category}</span>
-                    <span className="text-sm text-gray-900 dark:text-white">{formatINR(item.amount)}</span>
+                    <span className="text-sm text-gray-900 dark:text-white">₹{item.amount.toLocaleString()}</span>
                   </div>
                 ))}
                 <div className="border-t border-gray-200 dark:border-gray-700 pt-4">
                   <div className="flex items-center justify-between font-medium">
                     <span className="text-gray-900 dark:text-white">Total</span>
                     <span className="text-gray-900 dark:text-white">
-                      {formatINR(feeStructure.totalAnnualFee)}
+                      ₹{feeStructure.totalAnnualFee.toLocaleString()}
                     </span>
                   </div>
                 </div>
@@ -227,7 +219,7 @@ export default function FeesPage() {
                   >
                     <div className="flex-1 min-w-0">
                       <h4 className="font-medium">{installment.name}</h4>
-                      <p className="text-sm text-gray-500 dark:text-gray-400">Due: {installment.dueDate} â€¢ {formatINR(installment.amount)}</p>
+                      <p className="text-sm text-gray-500 dark:text-gray-400">Due: {installment.dueDate} • ₹{installment.amount.toLocaleString()}</p>
                     </div>
                     <div className="flex items-center space-x-2 flex-shrink-0 flex-wrap">
                       <Badge variant={installment.status === "Paid" ? "default" : "destructive"}>
@@ -259,7 +251,7 @@ export default function FeesPage() {
                   onClick={() => router.push(`/fees/payment?amount=${feeStructure.pendingAmount}`)}
                   className="flex-1"
                 >
-                  Pay Pending Amount ({formatINR(feeStructure.pendingAmount)})
+                  Pay Pending Amount (₹{feeStructure.pendingAmount.toLocaleString()})
                 </Button>
               )}
               <Button 
@@ -287,12 +279,12 @@ export default function FeesPage() {
                   className="flex items-center justify-between p-4 border border-gray-200 dark:border-gray-700 rounded-lg bg-white/50 dark:bg-gray-700/30"
                 >
                   <div className="flex-1 min-w-0">
-                    <h4 className="font-medium">{formatINR(payment.amount)}</h4>
+                    <h4 className="font-medium">₹{payment.amount.toLocaleString()}</h4>
                     <div className="flex items-center space-x-4 text-sm text-gray-600 dark:text-gray-400 mt-1 flex-wrap">
                       <span className="truncate">{payment.date}</span>
-                      <span>â€¢</span>
+                      <span>•</span>
                       <span className="truncate">{payment.method}</span>
-                      <span>â€¢</span>
+                      <span>•</span>
                       <span className="truncate">ID: {payment.transactionId}</span>
                     </div>
                   </div>
@@ -316,4 +308,3 @@ export default function FeesPage() {
     </div>
   )
 }
-

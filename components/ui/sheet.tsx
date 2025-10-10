@@ -4,8 +4,10 @@ import * as React from "react"
 import * as SheetPrimitive from "@radix-ui/react-dialog"
 import { cva, type VariantProps } from "class-variance-authority"
 import { X } from "lucide-react"
+import { Calendar as CalendarIcon, Clock as ClockIcon } from "lucide-react"
 
 import { cn } from "@/lib/utils"
+import { Dialog, DialogContent, DialogTrigger, DialogTitle } from "@/components/ui/dialog"
 
 const Sheet = SheetPrimitive.Root
 
@@ -58,7 +60,10 @@ const SheetContent = React.forwardRef<React.ElementRef<typeof SheetPrimitive.Con
     <SheetPortal>
       <SheetOverlay />
       <SheetPrimitive.Content ref={ref} className={cn(sheetVariants({ side }), className)} {...props}>
-        {children}
+        <DialogContent {...props}>
+          <DialogTitle className="sr-only">Sheet</DialogTitle>
+          {children}
+        </DialogContent>
         <SheetPrimitive.Close className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-secondary">
           <X className="h-4 w-4" />
           <span className="sr-only">Close</span>
@@ -107,3 +112,32 @@ export {
   SheetTitle,
   SheetDescription,
 }
+
+// place before toggling aria-hidden / hiding container
+if (document.activeElement instanceof HTMLElement) {
+  document.activeElement.blur()
+}
+
+<div className="relative bg-white rounded-lg shadow p-5 pb-16"> 
+  {/* card content */}
+  <div className="mt-4">
+    {/* main content */}
+  </div>
+
+  {/* footer: aligned left + meta on right */}
+  <div className="flex items-center justify-between gap-3 mt-4">
+    <div className="flex items-center gap-3">
+      <span className="text-sm text-gray-600">Physics Problem Solving Session</span>
+    </div>
+
+    <div className="flex items-center gap-3 text-sm text-gray-500">
+      <span className="flex items-center gap-2"><CalendarIcon className="w-4 h-4"/> 1/15/2024</span>
+      <span className="flex items-center gap-2"><ClockIcon className="w-4 h-4"/> 03:00 PM</span>
+    </div>
+  </div>
+
+  {/* floating action/avatar (bottom-left) */}
+  <button className="absolute bottom-4 left-4 w-10 h-10 rounded-full bg-red-600 text-white flex items-center justify-center shadow-lg">
+    N
+  </button>
+</div>
